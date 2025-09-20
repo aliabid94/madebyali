@@ -1,0 +1,13 @@
+{
+  "name": "webapp-frontend",
+  "version": "1.0.0",
+  "description": "Simple webapp frontend with Tailwind CSS",
+  "scripts": {
+    "build-css": "tailwindcss -i ./src/input.css -o ./static/styles.css --watch",
+    "build-css-prod": "tailwindcss -i ./src/input.css -o ./static/styles.css --minify",
+    "dev": "npm run build-css"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.17"
+  }
+}
