@@ -2,6 +2,9 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+    @apply m-0 p-0 min-h-screen;
+}
 
 input {
     @apply outline-none;
@@ -27,12 +30,12 @@ nav {
     }
 
     .card .details {
-        @apply absolute bottom-0 text-xs bg-white bg-opacity-60 p-1 m-1 rounded;
+        @apply absolute bottom-0 text-sm bg-white bg-opacity-60 p-1 m-1 rounded;
     }
 
     .card-tag {
         @apply absolute top-0 -right-2 px-1.5 py-0.5 rounded-full transform rotate-12 z-10;
-        font-size: 9px;
+        font-size: 11px;
     }
 
     .coming-soon {

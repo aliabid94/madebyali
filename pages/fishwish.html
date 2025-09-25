@@ -19,13 +19,17 @@
     </style>
 </head>
 
-<body class="fishwish min-h-screen flex flex-col items-center w-full">
-    <nav class="container px-4 flex mt-4 justify-between items-center w-full">
+<body class="fishwish w-full relative">
+    <nav class="mx-auto container px-4 flex pt-4 justify-between items-center w-full">
         <a href="/"><img src="/static/logo.png" class="h-6"></a>
-        <h1 class="text-md text-center">fishwish - <span id="date"></span>puzzle</h1>
+        <h1 class="text-md text-center">fishwish</h1>
         <button id="howToPlayBtn" class="outline-none hover:underline">how to play</button>
     </nav>
-    <main class="container px-4 grow">
+    <main class="mx-auto container px-4">
+        <div class="mb-4 text-sm flex justify-between">
+            <div><span id="date"></span> puzzle.</div>
+            <span id="timer" class="font-mono">00:00</span>
+        </div>
         <div id="cards" class="card-grid mb-4 relative">
             <div class="card">
                 <div class="clue"></div>
@@ -60,7 +64,7 @@
                 <div class="answer"></div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-8">
+        <div class="grid grid-cols-2 gap-8 pb-4 sticky bottom-0 box-content">
             <input type="text" placeholder="left clue" autofocus class="rounded border-4 border-gray-100 p-4">
             <input type="text" placeholder="right clue" class="rounded border-4 border-gray-100 p-4">
         </div>
@@ -71,8 +75,8 @@
             <button id="closeModal"
                 class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
             <h2 class="text-lg mb-4">how to play fishwish</h2>
-            <p>Each card is a clue representing a secret word. Each of the secret words on the left column has a
-                rhyming pair in the right column. The objective is uncover all the rhyming pairs.</p>
+            <p>Each clue represents a secret word. Each of the secret words on the left column has a
+                rhyming pair in ANY of the words in the right column. Uncover all the clues, one pair at a time.</p>
             <p>Let's take a look at an example with 2 cards on each side.</p>
             <div class="card-grid sm mb-3">
                 <div class="card">
@@ -92,8 +96,6 @@
                     <div class="answer hidden">order</div>
                 </div>
             </div>
-            <p>On their own, the clues may seem quite vague, but given that there is a rhyming pair in the other column
-                helps narrow options.</p>
             <p>The first card of the left might be "divide" or "border". The last clue on the right could be "rank" or
                 "order". We can identify a rhyming pair here - "border order"! You would enter this in the input
                 textboxes.</p>
@@ -101,7 +103,7 @@
         </div>
     </div>
 
-    <footer class="w-full h-32 relative">
+    <footer class="w-full h-32 absolute bottom-0 -z-50">
         <div class="absolute h-full w-full"
             style="background-image: url('/static/island/middle.png'); background-size: auto 128px;"></div>
         <img class="absolute left-0 h-full" src='/static/island/left.png' />
@@ -116,11 +118,13 @@
         function showModal() {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+            pauseTimer();
         }
 
         function hideModal() {
             modal.classList.remove('flex');
             modal.classList.add('hidden');
+            startTimer();
         }
 
         if (!localStorage.getItem('fishwish-visited')) {
@@ -223,17 +227,17 @@
                 let stroke_color;
                 let bg_color;
                 if (left === 0) {
-                    stroke_color = "stroke-red-500";
-                    bg_color = "bg-red-500";
+                    stroke_color = "stroke-fuchsia-500";
+                    bg_color = "bg-fuchsia-500";
                 } else if (left === 1) {
-                    stroke_color = "stroke-green-500";
-                    bg_color = "bg-green-500";
+                    stroke_color = "stroke-teal-500";
+                    bg_color = "bg-teal-500";
                 } else if (left === 2) {
                     stroke_color = "stroke-blue-500";
                     bg_color = "bg-blue-500";
                 } else if (left === 3) {
-                    stroke_color = "stroke-yellow-500";
-                    bg_color = "bg-yellow-500";
+                    stroke_color = "stroke-rose-500";
+                    bg_color = "bg-rose-500";
                 }
 
                 svg.style.position = 'absolute';
@@ -330,10 +334,44 @@
     <script>
         const dateSpan = document.getElementById('date');
         const today = new Date();
-        const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
-                       'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
+        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const formattedDate = months[today.getMonth()] + ' ' + today.getDate();
         dateSpan.textContent = formattedDate + ' ';
+
+        const timerSpan = document.getElementById('timer');
+        let startTime = Date.now();
+        let elapsedTime = 0;
+        let timerInterval;
+        let isTimerRunning = false;
+
+        function updateTimer() {
+            const currentTime = Date.now();
+            elapsedTime = Math.floor((currentTime - startTime) / 1000);
+
+            const minutes = Math.floor(elapsedTime / 60);
+            const seconds = elapsedTime % 60;
+
+            timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+
+        function startTimer() {
+            if (!isTimerRunning) {
+                startTime = Date.now() - (elapsedTime * 1000);
+                timerInterval = setInterval(updateTimer, 1000);
+                isTimerRunning = true;
+            }
+        }
+
+        function pauseTimer() {
+            if (isTimerRunning) {
+                clearInterval(timerInterval);
+                isTimerRunning = false;
+            }
+        }
+
+        // Start timer when page loads
+        startTimer();
     </script>
 </body>
 
