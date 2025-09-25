@@ -14,4 +14,4 @@ npm-debug.log*
 yarn-debug.log*
 .DS_Store
 
-static/styles.css
+static/styles*.css

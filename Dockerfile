@@ -10,6 +10,7 @@ COPY tailwind.config.js ./
 COPY src/ ./src/
 COPY static/ ./static/
 COPY pages/ ./pages/
+COPY scripts/ ./scripts/
 
 RUN npm run build-css-prod
 

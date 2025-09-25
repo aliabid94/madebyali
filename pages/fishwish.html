@@ -99,7 +99,7 @@
             <p>The first card of the left might be "divide" or "border". The last clue on the right could be "rank" or
                 "order". We can identify a rhyming pair here - "border order"! You would enter this in the input
                 textboxes.</p>
-            <p>Can you identify the other rhyming pair here?</p>
+            <p>Can you identify the other rhyming pair with the remaining clues?</p>
         </div>
     </div>
 
@@ -111,6 +111,12 @@
     </footer>
 
     <script>
+        const timerSpan = document.getElementById('timer');
+        let startTime = Date.now();
+        let elapsedTime = 0;
+        let timerInterval;
+        let isTimerRunning = false;
+
         const modal = document.getElementById('instructionsModal');
         const howToPlayBtn = document.getElementById('howToPlayBtn');
         const closeModalBtn = document.getElementById('closeModal');
@@ -146,8 +152,7 @@
                 hideModal();
             }
         });
-    </script>
-    <script>
+
 
         const firstInput = document.querySelector('input[type="text"]');
         const secondInput = document.querySelectorAll('input[type="text"]')[1];
@@ -298,10 +303,11 @@
                 firstInput.value = '';
                 secondInput.value = '';
                 firstInput.focus();
-                clearLines();
-                drawLines();
+                window.setTimeout(() => {
+                    clearLines();
+                    drawLines();
+                }, 0);
             } else {
-                // Invalid match - vibrate textboxes
                 vibrateTextboxes();
             }
         }
@@ -330,20 +336,12 @@
             drawLines();
         });
 
-    </script>
-    <script>
         const dateSpan = document.getElementById('date');
         const today = new Date();
         const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
                        'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
         const formattedDate = months[today.getMonth()] + ' ' + today.getDate();
         dateSpan.textContent = formattedDate + ' ';
-
-        const timerSpan = document.getElementById('timer');
-        let startTime = Date.now();
-        let elapsedTime = 0;
-        let timerInterval;
-        let isTimerRunning = false;
 
         function updateTimer() {
             const currentTime = Date.now();
@@ -370,7 +368,6 @@
             }
         }
 
-        // Start timer when page loads
         startTimer();
     </script>
 </body>

@@ -3,8 +3,8 @@
   "version": "1.0.0",
   "description": "Simple webapp frontend with Tailwind CSS",
   "scripts": {
-    "build-css": "tailwindcss -i ./src/*.css -o ./static/styles.css --watch",
-    "build-css-prod": "tailwindcss -i ./src/*.css -o ./static/styles.css --minify",
+    "build-css": "node scripts/reset-html-dev.js && tailwindcss -i ./src/*.css -o ./static/styles.css --watch",
+    "build-css-prod": "tailwindcss -i ./src/*.css -o ./static/styles.css --minify && node scripts/hash-css.js && node scripts/update-html.js",
     "dev": "npm run build-css"
   },
   "devDependencies": {

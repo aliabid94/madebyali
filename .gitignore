@@ -41,5 +41,5 @@ ehthumbs.db
 Thumbs.db
 
 # Tailwind CSS output (if generated)
-static/styles.css
+static/styles*.css
 
