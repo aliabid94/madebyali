@@ -1,0 +1,75 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+input {
+    @apply outline-none;
+}
+
+p {
+    @apply mb-3;
+}
+
+nav {
+    @apply mb-4;
+}
+
+.index {
+    .card {
+        @apply relative h-40 bg-gray-100 rounded flex justify-center items-center p-2 text-center;
+    }
+    .card .title {
+        @apply font-semibold transition-all;
+    }
+    .card:hover .title {
+        @apply scale-110; 
+    }
+
+    .card .details {
+        @apply absolute bottom-0 text-xs bg-white bg-opacity-60 p-1 m-1 rounded;
+    }
+
+    .card-tag {
+        @apply absolute top-0 -right-2 px-1.5 py-0.5 rounded-full transform rotate-12 z-10;
+        font-size: 9px;
+    }
+
+    .coming-soon {
+        @apply bg-red-500 text-white ;
+    }
+
+    .new-daily {
+        @apply bg-green-700 text-white ;
+    }
+}
+
+.fishwish {
+    .card-grid {
+        @apply grid grid-cols-2 gap-x-10 gap-y-4 relative;
+        &.sm {
+            @apply text-sm gap-3;
+            .card {
+                @apply min-h-12;
+            }
+        }
+    }
+    .card {
+        @apply rounded text-center p-2 min-h-20 flex flex-col justify-center items-center transition-colors;
+        &:not(.solved) {
+            @apply bg-gray-100;
+            .answer {
+                @apply hidden;
+            }
+        }
+        &.solved {
+            @apply text-white;
+        }
+        .clue {
+
+        }
+        .answer {
+            @apply mt-2 font-semibold;
+        }
+    }
+}
