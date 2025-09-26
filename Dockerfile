@@ -23,7 +23,8 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY . .
 
-COPY --from=build-stage /app/static/styles.css ./static/styles.css
+COPY --from=build-stage /app/static/ ./static/
+COPY --from=build-stage /app/pages/ ./pages/
 
 EXPOSE 8000
 
