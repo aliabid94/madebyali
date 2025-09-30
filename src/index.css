@@ -2,8 +2,13 @@
 @tailwind components;
 @tailwind utilities;
 
-html, body {
-    @apply m-0 p-0 min-h-dvh;
+html,
+body {
+    @apply m-0 p-0 min-h-dvh dark:bg-gray-950 dark:text-white;
+}
+
+body {
+    font-family: "Montserrat", sans-serif;
 }
 
 input {
@@ -20,17 +25,19 @@ nav {
 
 .index {
     .card {
-        @apply relative h-40 bg-gray-100 rounded flex justify-center items-center p-2 text-center;
+        @apply relative h-40 bg-gray-100 dark:bg-gray-800 rounded flex justify-center items-center p-2 text-center;
     }
+
     .card .title {
         @apply font-semibold transition-all;
     }
+
     .card:hover .title {
-        @apply scale-110; 
+        @apply scale-110;
     }
 
     .card .details {
-        @apply absolute bottom-0 text-sm bg-white bg-opacity-60 p-1 m-1 rounded;
+        @apply absolute bottom-0 text-sm bg-white dark:bg-black bg-opacity-60 p-1 m-1 rounded;
     }
 
     .card-tag {
@@ -39,40 +46,85 @@ nav {
     }
 
     .coming-soon {
-        @apply bg-red-500 text-white ;
+        @apply bg-red-500 text-white;
     }
 
     .new-daily {
-        @apply bg-green-700 text-white ;
+        @apply bg-green-700 text-white;
     }
 }
 
 .fishwish {
     .card-grid {
         @apply grid grid-cols-2 gap-x-10 gap-y-4 relative;
+
         &.sm {
             @apply text-sm gap-3;
+
             .card {
                 @apply min-h-12;
             }
         }
     }
+
     .card {
         @apply rounded text-center p-2 min-h-20 flex flex-col justify-center items-center transition-colors;
+
         &:not(.solved) {
-            @apply bg-gray-100;
+            @apply bg-gray-100 dark:bg-gray-800;
+
             .answer {
                 @apply hidden;
             }
         }
+
         &.solved {
             @apply text-white;
         }
-        .clue {
 
-        }
+        .clue {}
+
         .answer {
             @apply mt-2 font-semibold;
         }
+    }
+
+
+    .key {
+        @apply bg-gray-100 dark:bg-gray-700 hover:bg-gray-200 dark:hover:bg-gray-600 text-gray-800 dark:text-gray-200 font-medium py-3 text-center rounded-lg border border-gray-300 dark:border-gray-600 transition-colors select-none touch-manipulation text-xs;
+        min-height: 48px;
+    }
+
+    .key:active {
+        @apply bg-gray-300 dark:bg-gray-500 transform scale-95;
+    }
+
+    .input-box {
+        min-height: 48px;
+        @apply flex items-center justify-center relative;
+    }
+
+    .input-box.focused {
+        @apply border-pink-500 ring-2 ring-pink-200 dark:ring-pink-400;
+    }
+
+    .shake {
+        animation: shake 0.25s ease-in-out;
+    }
+}
+
+@keyframes shake {
+
+    0%,
+    100% {
+        transform: translateX(0);
+    }
+
+    25% {
+        transform: translateX(-5px);
+    }
+
+    75% {
+        transform: translateX(5px);
     }
 }

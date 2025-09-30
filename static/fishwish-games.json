@@ -1,0 +1,442 @@
+[
+    {
+        "left": [
+            [
+                "Faded after too much use",
+                "worn"
+            ],
+            [
+                "Total that's tallied",
+                "amount"
+            ],
+            [
+                "What society calls 'average'",
+                "norm"
+            ],
+            [
+                "Language of Moli\u00e8re",
+                "french"
+            ]
+        ],
+        "right": [
+            [
+                "What a unicorn leads with",
+                "horn"
+            ],
+            [
+                "Reserved seat at the courthouse?",
+                "bench"
+            ],
+            [
+                "Change shape, like Optimus Prime",
+                "transform"
+            ],
+            [
+                "Ledger entry or explanation",
+                "account"
+            ]
+        ],
+        "match_order": [
+            0,
+            3,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Color that's cowardly in cartoons",
+                "yellow"
+            ],
+            [
+                "What a thief steals in a second",
+                "glance"
+            ],
+            [
+                "Equal in rank, not superior",
+                "peer"
+            ],
+            [
+                "Vows traded under ritual spotlight",
+                "ceremony"
+            ]
+        ],
+        "right": [
+            [
+                "Sworn words heard under oath",
+                "testimony"
+            ],
+            [
+                "Money matters, literally",
+                "finance"
+            ],
+            [
+                "Companion who rhymes with 'bellow'",
+                "fellow"
+            ],
+            [
+                "Do a magician\u2019s trick at the finale",
+                "disappear"
+            ]
+        ],
+        "match_order": [
+            2,
+            1,
+            3,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Mighty but not necessarily large",
+                "strong"
+            ],
+            [
+                "Loosen tension like a slackening rope",
+                "relax"
+            ],
+            [
+                "Tiny bit that physics ponders",
+                "particle"
+            ],
+            [
+                "Brain\u2019s passing visitor, fleeting yet profound",
+                "thought"
+            ]
+        ],
+        "right": [
+            [
+                "Acquired with money, not given",
+                "bought"
+            ],
+            [
+                "Opposite of right in more ways than one",
+                "wrong"
+            ],
+            [
+                "Definite or indefinite, it shapes grammar",
+                "article"
+            ],
+            [
+                "Governments demand it, grudgingly supplied",
+                "tax"
+            ]
+        ],
+        "match_order": [
+            1,
+            3,
+            2,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Fuel for laughter or a car",
+                "gas"
+            ],
+            [
+                "Not these, but ___",
+                "those"
+            ],
+            [
+                "At the same time, elsewhere",
+                "meanwhile"
+            ],
+            [
+                "Trend that quickly goes out of style",
+                "fashion"
+            ]
+        ],
+        "right": [
+            [
+                "Lecture group\u2014or social status",
+                "class"
+            ],
+            [
+                "It burns without flames",
+                "passion"
+            ],
+            [
+                "Force rules on others",
+                "impose"
+            ],
+            [
+                "Woven industry product",
+                "textile"
+            ]
+        ],
+        "match_order": [
+            0,
+            2,
+            3,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Occident on a compass",
+                "west"
+            ],
+            [
+                "Direction opposite of up",
+                "down"
+            ],
+            [
+                "Make certain, like a reservation or a suspicion",
+                "confirm"
+            ],
+            [
+                "Uneasy feeling before an exam, perhaps",
+                "anxiety"
+            ]
+        ],
+        "right": [
+            [
+                "Semester\u2019s span in school jargon",
+                "term"
+            ],
+            [
+                "Stop a suspect in their tracks",
+                "arrest"
+            ],
+            [
+                "Different sorts packed in one selection",
+                "variety"
+            ],
+            [
+                "Where main street might lead you",
+                "town"
+            ]
+        ],
+        "match_order": [
+            1,
+            3,
+            0,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "City leader in politics",
+                "mayor"
+            ],
+            [
+                "Smallest portion on the scale",
+                "least"
+            ],
+            [
+                "Bachelor in the forest",
+                "stag"
+            ],
+            [
+                "Texas city with TV fame",
+                "dallas"
+            ]
+        ],
+        "right": [
+            [
+                "Where the sun makes its entrance",
+                "east"
+            ],
+            [
+                "Tattered cloth without respect",
+                "rag"
+            ],
+            [
+                "One still in the game",
+                "player"
+            ],
+            [
+                "Residence fit for royalty",
+                "palace"
+            ]
+        ],
+        "match_order": [
+            2,
+            0,
+            1,
+            3
+        ]
+    },
+    {
+        "left": [
+            [
+                "One followed, not following",
+                "leader"
+            ],
+            [
+                "One who hasn't yet grown up, or grown wise",
+                "child"
+            ],
+            [
+                "Flip of a lever, change of direction",
+                "switch"
+            ],
+            [
+                "Where maps once trailed off: 'Here be dragons'",
+                "frontier"
+            ]
+        ],
+        "right": [
+            [
+                "Untamed, uncultivated, or just a little too free",
+                "wild"
+            ],
+            [
+                "Obvious to all, though sometimes invisible",
+                "clear"
+            ],
+            [
+                "Salesman\u2019s persuasive speech, or a fastball\u2019s flight",
+                "pitch"
+            ],
+            [
+                "Always in the margins, never in the margins",
+                "reader"
+            ]
+        ],
+        "match_order": [
+            3,
+            0,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Cunning plan, not a simple dream",
+                "scheme"
+            ],
+            [
+                "Man of the house, sometimes holy",
+                "father"
+            ],
+            [
+                "Playground path with a fast ending",
+                "slide"
+            ],
+            [
+                "Vision's verb, not just a noun",
+                "see"
+            ]
+        ],
+        "right": [
+            [
+                "It grows higher but never walks away",
+                "tree"
+            ],
+            [
+                "Opposite of narrow lane",
+                "wide"
+            ],
+            [
+                "Annoyance that rhymes with 'other'",
+                "bother"
+            ],
+            [
+                "Light travels in this straight line",
+                "beam"
+            ]
+        ],
+        "match_order": [
+            3,
+            2,
+            1,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Trash it or decline it",
+                "refuse"
+            ],
+            [
+                "One apiece, no exceptions",
+                "each"
+            ],
+            [
+                "Private thoughts bound in paper armor",
+                "journal"
+            ],
+            [
+                "Mathematical breakup or organizational split",
+                "division"
+            ]
+        ],
+        "right": [
+            [
+                "Hidden conflict, not external",
+                "internal"
+            ],
+            [
+                "The tongue's performance without instruments",
+                "speech"
+            ],
+            [
+                "Crossroads leading to one outcome",
+                "decision"
+            ],
+            [
+                "Point the finger in blame",
+                "accuse"
+            ]
+        ],
+        "match_order": [
+            3,
+            1,
+            0,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "Shrink your impact on the planet?",
+                "reduce"
+            ],
+            [
+                "Where a lump forms when nervous",
+                "throat"
+            ],
+            [
+                "Rain or shine decision word",
+                "whether"
+            ],
+            [
+                "Remote\u2019s ultimate purpose",
+                "control"
+            ]
+        ],
+        "right": [
+            [
+                "Not tight, but still attached",
+                "loose"
+            ],
+            [
+                "United in harmony or in chaos",
+                "together"
+            ],
+            [
+                "Bakery item, or to tumble forward",
+                "roll"
+            ],
+            [
+                "Advertise, elevate, advance",
+                "promote"
+            ]
+        ],
+        "match_order": [
+            0,
+            3,
+            1,
+            2
+        ]
+    }
+]

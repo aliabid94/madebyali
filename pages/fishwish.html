@@ -12,24 +12,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
         rel="stylesheet">
-    <style>
-        body {
-            font-family: "Montserrat", sans-serif;
-        }
-    </style>
 </head>
 
-<body class="fishwish w-full relative">
+<body class="fishwish w-full relative min-h-screen flex flex-col">
     <nav class="mx-auto container px-4 flex pt-4 justify-between items-center w-full">
-        <a href="/"><img src="/static/logo.png" class="h-6"></a>
-        <h1 class="text-md text-center">fishwish</h1>
-        <button id="howToPlayBtn" class="outline-none hover:underline">how to play</button>
-    </nav>
-    <main class="mx-auto container px-4">
-        <div class="mb-4 text-sm flex justify-between">
-            <div><span id="date"></span> puzzle.</div>
-            <span id="timer" class="font-mono">00:00</span>
+        <a href="/"><img src="/static/logo.png" class="h-5 sm:h-6 dark:invert"></a>
+        <div>
+            <h1 class="text-md text-center text-xl">fishwish</h1>
+            <div class="text-xs text-gray-500 dark:text-gray-400">
+                <span id="date"></span> puzzle: <span id="timer">--:--</span>
+            </div>
         </div>
+        <button id="howToPlayBtn" class="outline-none hover:underline text-xs sm:text-base">how to play</button>
+    </nav>
+    <main class="mx-auto container px-4 flex-1">
         <div id="cards" class="card-grid mb-4 relative">
             <div class="card">
                 <div class="clue"></div>
@@ -64,53 +60,101 @@
                 <div class="answer"></div>
             </div>
         </div>
-        <div class="grid grid-cols-2 gap-8 pb-4 sticky bottom-0 box-content">
-            <input type="text" placeholder="left clue" autofocus class="rounded border-4 border-gray-100 p-4">
-            <input type="text" placeholder="right clue" class="rounded border-4 border-gray-100 p-4">
-        </div>
     </main>
 
-    <div id="instructionsModal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center hidden z-50">
-        <div class="bg-white rounded p-6 min-w-80 max-w-md max-h-full overflow-y-auto mx-4 relative text-sm">
+    <div id="modal" class="fixed inset-0 bg-black bg-opacity-50 items-center justify-center hidden z-50">
+        <div
+            class="bg-white dark:bg-gray-900 rounded p-8 min-w-96 max-w-md max-h-full overflow-y-auto mx-4 relative text-sm">
             <button id="closeModal"
-                class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
-            <h2 class="text-lg mb-4">how to play fishwish</h2>
-            <p>Each clue represents a secret word. Each of the secret words on the left column has a
-                rhyming pair in ANY of the words in the right column. Uncover all the clues, one pair at a time.</p>
-            <p>Let's take a look at an example with 2 cards on each side.</p>
-            <div class="card-grid sm mb-3">
-                <div class="card">
-                    <div class="clue">e.g. the DMZ, or Berlin Wall</div>
-                    <div class="answer hidden">border</div>
+                class="absolute top-2 right-2 text-gray-500 hover:text-gray-700 text-5xl">&times;</button>
+
+            <div id="instructionsContent">
+                <h2 class="text-lg mb-4">how to play fishwish</h2>
+                <p>Each clue represents a secret word. Each of the secret words on the left column has a
+                    single rhyming pair with one of the words in the right column. Uncover all the clues, one pair at a
+                    time.</p>
+                <p>Let's take a look at an example with 2 cards on each side.</p>
+                <div class="card-grid sm mb-3">
+                    <div class="card">
+                        <div class="clue">e.g. the DMZ, or Berlin Wall</div>
+                        <div class="answer hidden">border</div>
+                    </div>
+                    <div class="card">
+                        <div class="clue">You get 3 (no asking for more!)</div>
+                        <div class="answer hidden">wish</div>
+                    </div>
+                    <div class="card">
+                        <div class="clue">Suspicious with a y?</div>
+                        <div class="answer hidden">fish</div>
+                    </div>
+                    <div class="card">
+                        <div class="clue">1st, 2nd, then 3rd.</div>
+                        <div class="answer hidden">order</div>
+                    </div>
                 </div>
-                <div class="card">
-                    <div class="clue">You get 3 (no asking for more!)</div>
-                    <div class="answer hidden">wish</div>
-                </div>
-                <div class="card">
-                    <div class="clue">Suspicious with a y?</div>
-                    <div class="answer hidden">fish</div>
-                </div>
-                <div class="card">
-                    <div class="clue">1st, 2nd, then 3rd.</div>
-                    <div class="answer hidden">order</div>
-                </div>
+                <p>The first card of the left might be "divide" or "border". The last clue on the right could be "rank" or
+                    "order". We can identify a rhyming pair here - "border order"! You would enter this in the input
+                    textboxes.</p>
+                <p>Can you identify the other rhyming pair with the remaining clues?</p>
             </div>
-            <p>The first card of the left might be "divide" or "border". The last clue on the right could be "rank" or
-                "order". We can identify a rhyming pair here - "border order"! You would enter this in the input
-                textboxes.</p>
-            <p>Can you identify the other rhyming pair with the remaining clues?</p>
+
+            <div id="completionContent" class="hidden">
+                <p class="mb-4">You completed today's fishwish puzzle!</p>
+                <p class="font-semibold">Time: <span id="completionTime"></span></p>
+                <p class="font-semibold">Streak: <span id="completionStreak"></span></p>
+            </div>
         </div>
     </div>
 
-    <footer class="w-full h-32 absolute bottom-0 -z-50">
-        <div class="absolute h-full w-full"
-            style="background-image: url('/static/island/middle.png'); background-size: auto 128px;"></div>
-        <img class="absolute left-0 h-full" src='/static/island/left.png' />
-        <img class="absolute right-0 h-full" src='/static/island/right.png' />
-    </footer>
+    <div
+        class="keyboard sticky bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 bg-opacity-50 dark:bg-opacity-50 z-20">
+        <div class="max-w-xl mx-auto">
+            <div class="flex gap-2 mb-3 justify-center" id="inputBoxes">
+                <div class="input-box flex-1 border-2 border-gray-300 dark:border-gray-500 rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 cursor-text"
+                    id="leftInputBox" data-placeholder="left"></div>
+                <div class="input-box flex-1 border-2 border-gray-300 dark:border-gray-500 rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 cursor-text"
+                    id="rightInputBox" data-placeholder="right"></div>
+                <button onclick="submitAnswer()"
+                    class="bg-pink-500 flex-grow-0 flex-shrink-0 basis-0 hover:bg-pink-500 text-white px-4 py-2 rounded-lg font-medium">Submit</button>
+            </div>
+            <div class="grid grid-cols-10 gap-1 sm:gap-2 mb-2">
+                <button class="key" data-key="q">Q</button>
+                <button class="key" data-key="w">W</button>
+                <button class="key" data-key="e">E</button>
+                <button class="key" data-key="r">R</button>
+                <button class="key" data-key="t">T</button>
+                <button class="key" data-key="y">Y</button>
+                <button class="key" data-key="u">U</button>
+                <button class="key" data-key="i">I</button>
+                <button class="key" data-key="o">O</button>
+                <button class="key" data-key="p">P</button>
+            </div>
+            <div class="grid grid-cols-9 gap-1 sm:gap-2 mb-2 px-4">
+                <button class="key" data-key="a">A</button>
+                <button class="key" data-key="s">S</button>
+                <button class="key" data-key="d">D</button>
+                <button class="key" data-key="f">F</button>
+                <button class="key" data-key="g">G</button>
+                <button class="key" data-key="h">H</button>
+                <button class="key" data-key="j">J</button>
+                <button class="key" data-key="k">K</button>
+                <button class="key" data-key="l">L</button>
+            </div>
+            <div class="grid grid-cols-8 gap-1 sm:gap-2 px-8">
+                <button class="key" data-key="z">Z</button>
+                <button class="key" data-key="x">X</button>
+                <button class="key" data-key="c">C</button>
+                <button class="key" data-key="v">V</button>
+                <button class="key" data-key="b">B</button>
+                <button class="key" data-key="n">N</button>
+                <button class="key" data-key="m">M</button>
+                <button class="key" data-key="backspace">⌫</button>
+            </div>
+        </div>
+    </div>
 
     <script>
+        // timer and game state management
         const gamename = "fishwish";
 
         const timerSpan = document.getElementById('timer');
@@ -119,25 +163,98 @@
         let timerInterval;
         let isTimerRunning = false;
 
-        const modal = document.getElementById('instructionsModal');
+        const today = new Date();
+        today.setHours(0, 0, 0, 0);
+        const todayString = today.toLocaleDateString('en-US');
+        const gameKey = `${gamename}-${todayString}`;
+        const visitedKey = `${gamename}-visited`;
+        const completionsKey = `${gamename}-completions`;
+
+        const firstDay = new Date('2025-09-30');
+        firstDay.setHours(0, 0, 0, 0);
+        const daysSinceFirstDay = Math.floor((today - firstDay) / (1000 * 60 * 60 * 24));
+
+        let gameState = localStorage.getItem(gameKey);
+        if (gameState) {
+            gameState = JSON.parse(gameState);
+            elapsedTime = gameState.elapsedTime || 0;
+        } else {
+            elapsedTime = 0;
+            gameState = {
+                elapsedTime: 0,
+                complete: false,
+                solvedClues: [],
+            };
+        }
+        let visitedState = localStorage.getItem(visitedKey);
+        if (!visitedState) {
+            localStorage.setItem(visitedKey, 'true');
+        }
+        let completionsState = localStorage.getItem(completionsKey);
+        if (completionsState) {
+            completionsState = JSON.parse(completionsState);
+        } else {
+            completionsState = [];
+        }
+
+        function setGameState(key, value) {
+            gameState[key] = value;
+            localStorage.setItem(gameKey, JSON.stringify(gameState));
+        }
+        
+        // modal management
+        const modal = document.getElementById('modal');
         const howToPlayBtn = document.getElementById('howToPlayBtn');
         const closeModalBtn = document.getElementById('closeModal');
 
         function showModal() {
             modal.classList.remove('hidden');
             modal.classList.add('flex');
-            pauseTimer();
+            stopTimer();
         }
 
         function hideModal() {
             modal.classList.remove('flex');
             modal.classList.add('hidden');
-            startTimer();
+
+            document.getElementById('instructionsContent').classList.remove('hidden');
+            document.getElementById('completionContent').classList.add('hidden');
+
+            if (!gameState.complete) startTimer();
         }
 
-        if (!localStorage.getItem(`${gamename}-visited`)) {
+        function showCompletionModal() {
+            const minutes = Math.floor(gameState.elapsedTime / 60);
+            const seconds = gameState.elapsedTime % 60;
+            const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+
+            document.getElementById('instructionsContent').classList.add('hidden');
+            document.getElementById('completionContent').classList.remove('hidden');
+
+            document.getElementById('completionTime').textContent = timeString;
+
+            if (!completionsState.includes(todayString)) completionsState.push(todayString);
+            localStorage.setItem(completionsKey, JSON.stringify(completionsState));
+            let streak = 0;
+            let currentDate = new Date();
+            for (let i = completionsState.length - 1; i >= 0; i--) {
+                const completionDate = new Date(completionsState[i]);
+                if ((currentDate - completionDate) / (1000 * 60 * 60 * 24) < 1) {
+                    streak++;
+                    currentDate.setDate(currentDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+
+            document.getElementById('completionStreak').textContent = `${streak} day${streak !== 1 ? 's' : ''}`;
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+        }
+
+        if (!visitedState) {
             showModal();
-            localStorage.setItem(`${gamename}-visited`, 'true');
         }
 
         howToPlayBtn.addEventListener('click', showModal);
@@ -155,74 +272,53 @@
             }
         });
 
+        // date & timer display
         const dateSpan = document.getElementById('date');
-        const today = new Date();
-        const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        const months = ['jan', 'feb', 'mar', 'apr', 'may', 'jun',
+            'jul', 'aug', 'sep', 'oct', 'nov', 'dec'];
         const formattedDate = months[today.getMonth()] + ' ' + today.getDate();
-        dateSpan.textContent = formattedDate + ' ';
+        dateSpan.textContent = formattedDate;
+
+        function printTimer() {
+            const minutes = Math.floor(gameState.elapsedTime / 60);
+            const seconds = gameState.elapsedTime % 60;
+            timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        printTimer();
 
         function updateTimer() {
-            const currentTime = Date.now();
-            elapsedTime = Math.floor((currentTime - startTime) / 1000);
-
-            const minutes = Math.floor(elapsedTime / 60);
-            const seconds = elapsedTime % 60;
-
-            timerSpan.textContent = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            setGameState('elapsedTime', gameState.elapsedTime + 1);
+            printTimer();
         }
 
         function startTimer() {
             if (!isTimerRunning) {
-                startTime = Date.now() - (elapsedTime * 1000);
                 timerInterval = setInterval(updateTimer, 1000);
                 isTimerRunning = true;
             }
         }
 
-        function pauseTimer() {
+        function stopTimer() {
             if (isTimerRunning) {
                 clearInterval(timerInterval);
                 isTimerRunning = false;
             }
         }
 
-        startTimer();        
+        if (!gameState.complete && visitedState) {
+            startTimer();
+        }
 
+        // game mechanics
+        let game;
+        fetch('/static/fishwish-games.json')
+            .then(response => response.json())
+            .then(data => {
+                game = data[daysSinceFirstDay % data.length];
+                startGame();
+                drawLines();
+            });
 
-        const firstInput = document.querySelector('input[type="text"]');
-        const secondInput = document.querySelectorAll('input[type="text"]')[1];
-
-        firstInput.addEventListener('keydown', function (e) {
-            if (e.key === ' ') {
-                e.preventDefault();
-                secondInput.focus();
-            }
-            if (e.key === 'Enter') {
-                submit();
-            }
-        });
-
-        secondInput.addEventListener('keydown', function (e) {
-            if (e.key === 'Enter') {
-                submit();
-            }
-        });
-
-        const game = {
-            left: [
-                ["e.g. the DMZ, or Berlin Wall", "border"],
-                ["Suspicious with a y?", "fish"],
-                ["Not quite dark", "light"],
-                ["A flying mammal", "bat"]
-            ], right: [
-                ["You get 3 (no asking for more!)", "wish"],
-                ["Opposite of day", "night"],
-                ["1st, 2nd, then 3rd.", "order"],
-                ["Ozempic ended this", "fat"]
-            ], match_order: [2, 0, 1, 3]
-        };
-        let solved = [];
 
         function startGame() {
             const cardsContainer = document.getElementById('cards');
@@ -237,14 +333,22 @@
                 rightCard.querySelector('.answer').textContent = game.right[i][1];
             }
         }
-        startGame();
+
+        function disableGameInput() {
+            document.getElementById('leftInputBox').style.pointerEvents = 'none';
+            document.getElementById('rightInputBox').style.pointerEvents = 'none';
+            document.querySelector('button[onclick="submitAnswer()"]').disabled = true;
+            document.querySelector('button[onclick="submitAnswer()"]').style.opacity = '0.5';
+
+            window.gameComplete = true;
+        }
 
         function clearLines() {
             document.querySelectorAll('svg').forEach(svg => svg.remove());
         }
 
-        function drawLines() {
-            for (const left of solved) {
+        function drawLines(fadeIn = true) {
+            for (const left of gameState.solvedClues) {
                 const right = game.match_order[left];
                 const from = document.querySelector(`#cards .card:nth-child(${left * 2 + 1})`);
                 const to = document.querySelector(`#cards .card:nth-child(${right * 2 + 2})`);
@@ -254,12 +358,12 @@
 
                 const fromCenter = {
                     x: fromRect.right - 4,
-                    y: fromRect.top + fromRect.height / 2
+                    y: fromRect.top + fromRect.height / 2 + window.scrollY
                 };
 
                 const toCenter = {
                     x: toRect.left + 4,
-                    y: toRect.top + toRect.height / 2
+                    y: toRect.top + toRect.height / 2 + window.scrollY
                 };
 
                 const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
@@ -268,17 +372,17 @@
                 let stroke_color;
                 let bg_color;
                 if (left === 0) {
-                    stroke_color = "stroke-fuchsia-500";
-                    bg_color = "bg-fuchsia-500";
+                    stroke_color = "stroke-cyan-500 dark:stroke-cyan-600";
+                    bg_color = "bg-cyan-500 dark:bg-cyan-600";
                 } else if (left === 1) {
-                    stroke_color = "stroke-teal-500";
-                    bg_color = "bg-teal-500";
+                    stroke_color = "stroke-teal-500 dark:stroke-teal-600";
+                    bg_color = "bg-teal-500 dark:bg-teal-600";
                 } else if (left === 2) {
-                    stroke_color = "stroke-blue-500";
-                    bg_color = "bg-blue-500";
+                    stroke_color = "stroke-pink-500 dark:stroke-pink-600";
+                    bg_color = "bg-pink-500 dark:bg-pink-600";
                 } else if (left === 3) {
-                    stroke_color = "stroke-rose-500";
-                    bg_color = "bg-rose-500";
+                    stroke_color = "stroke-yellow-500 dark:stroke-yellow-600";
+                    bg_color = "bg-yellow-500 dark:bg-yellow-600";
                 }
 
                 svg.style.position = 'absolute';
@@ -287,9 +391,14 @@
                 svg.style.width = '100vw';
                 svg.style.height = '100vh';
                 svg.style.pointerEvents = 'none';
-                svg.style.zIndex = '-1';
 
-                line.classList.add(stroke_color);
+                if (fadeIn) {
+                    svg.style.zIndex = '1';
+                    svg.style.opacity = '0';
+                    svg.style.transition = 'opacity 150ms ease-out';
+                }
+
+                stroke_color.split(' ').forEach(cls => line.classList.add(cls));
                 line.setAttribute('x1', fromCenter.x);
                 line.setAttribute('y1', fromCenter.y);
                 line.setAttribute('x2', toCenter.x);
@@ -298,19 +407,124 @@
                 line.setAttribute('stroke-width', '8');
 
                 svg.appendChild(line);
-                from.classList.add(bg_color);
+                bg_color.split(' ').forEach(cls => from.classList.add(cls));
                 from.classList.add('solved');
-                to.classList.add(bg_color);
+                bg_color.split(' ').forEach(cls => to.classList.add(cls));
                 to.classList.add('solved');
                 document.body.appendChild(svg);
+
+                if (fadeIn) {
+                    requestAnimationFrame(() => {
+                        svg.style.opacity = '1';
+                    });
+                }
             }
         }
 
-        drawLines();
+        window.addEventListener('resize', function () {
+            clearLines();
+            drawLines(false);
+        });
 
-        function submit() {
-            const leftEntry = firstInput.value.trim().toLowerCase();
-            const rightEntry = secondInput.value.trim().toLowerCase();
+        // keyboard and textbox management
+        const inputBoxes = document.getElementById('inputBoxes');
+        const leftInputBox = document.getElementById('leftInputBox');
+        const rightInputBox = document.getElementById('rightInputBox');
+        let activeInputBox = leftInputBox;
+
+        leftInputBox.classList.add('focused');
+
+        leftInputBox.addEventListener('click', function () {
+            rightInputBox.classList.remove('focused');
+            leftInputBox.classList.add('focused');
+            activeInputBox = leftInputBox;
+        });
+
+        rightInputBox.addEventListener('click', function () {
+            leftInputBox.classList.remove('focused');
+            rightInputBox.classList.add('focused');
+            activeInputBox = rightInputBox;
+        });
+
+        document.addEventListener('keydown', function (e) {
+            if (e.key === 'Tab') {
+                e.preventDefault();
+                if (activeInputBox === leftInputBox) {
+                    rightInputBox.classList.add('focused');
+                    leftInputBox.classList.remove('focused');
+                    activeInputBox = rightInputBox;
+                } else {
+                    leftInputBox.classList.add('focused');
+                    rightInputBox.classList.remove('focused');
+                    activeInputBox = leftInputBox;
+                }
+            }
+        });
+
+        document.addEventListener('click', function (e) {
+            if (e.target.classList.contains('key')) {
+                const key = e.target.getAttribute('data-key');
+                handleVirtualKeyPress(key);
+            }
+        });
+
+        function handleVirtualKeyPress(key) {
+            if (!activeInputBox || window.gameComplete) return;
+
+            if (key === 'backspace') {
+                const currentValue = activeInputBox.textContent;
+                activeInputBox.textContent = currentValue.slice(0, -1);
+            } else {
+                activeInputBox.textContent += key.toLowerCase();
+            }
+        }
+
+        document.addEventListener('keydown', function (e) {
+            if (e.ctrlKey || e.altKey || e.metaKey) {
+                return;
+            }
+
+            if (e.key === 'Tab') return;
+            if (e.key === 'Escape') return;
+
+            if (!activeInputBox || window.gameComplete) return;
+
+            if (e.key === 'Backspace') {
+                e.preventDefault();
+                const currentValue = activeInputBox.textContent;
+                activeInputBox.textContent = currentValue.slice(0, -1);
+            } else if (e.key === 'Enter') {
+                e.preventDefault();
+                submitAnswer();
+            } else if (e.key === ' ') {
+                e.preventDefault();
+                if (activeInputBox === leftInputBox) {
+                    rightInputBox.classList.add('focused');
+                    leftInputBox.classList.remove('focused');
+                    activeInputBox = rightInputBox;
+                } else {
+                    leftInputBox.classList.add('focused');
+                    rightInputBox.classList.remove('focused');
+                    activeInputBox = leftInputBox;
+                }
+            } else if (e.key.length === 1 && /[a-zA-Z]/.test(e.key)) {
+                e.preventDefault();
+                activeInputBox.textContent += e.key.toLowerCase();
+            }
+        });
+
+        function vibrateTextboxes() {
+            inputBoxes.classList.add('shake');
+            setTimeout(() => {
+                inputBoxes.classList.remove('shake');
+            }, 500);
+        }
+
+        function submitAnswer() {
+            if (window.gameComplete) return;
+
+            const leftEntry = leftInputBox.textContent.trim().toLowerCase();
+            const rightEntry = rightInputBox.textContent.trim().toLowerCase();
 
             if (!leftEntry || !rightEntry) return;
 
@@ -333,44 +547,37 @@
 
             if (leftIndex !== -1 && rightIndex !== -1 &&
                 game.match_order[leftIndex] === rightIndex &&
-                !solved.includes(leftIndex)) {
+                !gameState.solvedClues.includes(leftIndex)) {
 
-                solved.push(leftIndex);
-                firstInput.value = '';
-                secondInput.value = '';
-                firstInput.focus();
+                setGameState('solvedClues', [...gameState.solvedClues, leftIndex]);
+                leftInputBox.textContent = '';
+                rightInputBox.textContent = '';
+                leftInputBox.classList.add('focused');
+                rightInputBox.classList.remove('focused');
+                activeInputBox = leftInputBox;
+
                 window.setTimeout(() => {
                     clearLines();
                     drawLines();
+
+                    if (gameState.solvedClues.length === game.left.length) {
+                        setGameState('complete', true);
+                        handleGameCompletion();
+                    }
                 }, 0);
             } else {
                 vibrateTextboxes();
             }
         }
 
-        function vibrateTextboxes() {
-            const vibrationKeyframes = [
-                { transform: 'translateX(0px)' },
-                { transform: 'translateX(-10px)' },
-                { transform: 'translateX(10px)' },
-                { transform: 'translateX(-10px)' },
-                { transform: 'translateX(10px)' },
-                { transform: 'translateX(0px)' }
-            ];
-
-            const vibrationOptions = {
-                duration: 400,
-                easing: 'ease-in-out'
-            };
-
-            firstInput.animate(vibrationKeyframes, vibrationOptions);
-            secondInput.animate(vibrationKeyframes, vibrationOptions);
+        function handleGameCompletion() {
+            stopTimer();
+            disableGameInput();
+            showCompletionModal();
         }
-
-        window.addEventListener('resize', function () {
-            clearLines();
-            drawLines();
-        });
+        if (gameState.complete) {
+            handleGameCompletion();
+        }
     </script>
 </body>
 
