@@ -2,20 +2,20 @@
     {
         "left": [
             [
-                "Impulse hard to resist",
-                "urge"
-            ],
-            [
                 "Half-baked idea",
                 "notion"
             ],
             [
-                "First letter written by hand?",
-                "initial"
-            ],
-            [
                 "These 'makers' will make your heart pump",
                 "pace"
+            ],
+            [
+                "Impulse hard to resist",
+                "urge"
+            ],
+            [
+                "First letter written by hand?",
+                "initial"
             ]
         ],
         "right": [
@@ -37,10 +37,10 @@
             ]
         ],
         "match_order": [
-            3,
             2,
-            0,
-            1
+            1,
+            3,
+            0
         ]
     },
     {
@@ -50,16 +50,16 @@
                 "neighbor"
             ],
             [
-                "a plea, or stylish charm",
-                "appeal"
-            ],
-            [
                 "What you do at the ETA",
                 "arrive"
             ],
             [
                 "Six-legged critter",
                 "insect"
+            ],
+            [
+                "A plea, or stylish charm",
+                "appeal"
             ]
         ],
         "right": [
@@ -82,28 +82,28 @@
         ],
         "match_order": [
             1,
-            0,
             2,
-            3
+            3,
+            0
         ]
     },
     {
         "left": [
             [
+                "Formal protest at a courtroom",
+                "objection"
+            ],
+            [
+                "Waxing crescent, for example",
+                "phase"
+            ],
+            [
                 "Done from the pulpit",
                 "preach"
             ],
             [
-                "Waxing crescent is an example of a moon _____",
-                "phase"
-            ],
-            [
                 "Absent of light",
                 "dark"
-            ],
-            [
-                "Formal protest at a courtroom",
-                "objection"
             ]
         ],
         "right": [
@@ -125,21 +125,21 @@
             ]
         ],
         "match_order": [
-            0,
+            1,
             2,
-            3,
-            1
+            0,
+            3
         ]
     },
     {
         "left": [
             [
-                "Line you might find in a stanza",
-                "verse"
-            ],
-            [
                 "Shaper of youthful minds",
                 "teacher"
+            ],
+            [
+                "Line you might find in a stanza",
+                "verse"
             ],
             [
                 "Overflowing, with nothing lacking",
@@ -169,8 +169,8 @@
             ]
         ],
         "match_order": [
-            0,
             1,
+            0,
             3,
             2
         ]
@@ -226,16 +226,16 @@
                 "moral"
             ],
             [
-                "An evening meal",
-                "supper"
-            ],
-            [
                 "Money matters, literally",
                 "finance"
             ],
             [
                 "Snows fate in spring",
                 "melt"
+            ],
+            [
+                "An evening meal",
+                "supper"
             ]
         ],
         "right": [
@@ -258,9 +258,9 @@
         ],
         "match_order": [
             0,
-            2,
             3,
-            1
+            1,
+            2
         ]
     }
 ]
