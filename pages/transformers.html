@@ -39,21 +39,19 @@
 
             <div id="instructionsContent">
                 <h2 class="text-lg mb-4">how to play transformers</h2>
-                <p class="mb-3">Transform one word into another by changing, adding, removing, or rearranging letters one step at a time.</p>
+                <p class="mb-3">You'll create a chain of words, given the first and last words of the chain. Fill in the middle words with valid transformations between them.</p>
+
 
                 <p class="mb-3"><strong>Valid transformations:</strong></p>
                 <ul class="list-disc list-inside mb-3">
                     <li>Insert a letter: CAT → CART</li>
-                    <li>Remove a letter: FLOW → LOW</li>
-                    <li>Swap a letter: GLOW → GROW</li>
-                    <li>Rearrange letters: TAN → ANT</li>
+                    <li>Remove a letter: CART → ART</li>
+                    <li>Swap a letter: ART → ARE</li>
+                    <li>Rearrange letters: ARE → EAR</li>
                 </ul>
 
-                <p class="mb-3">You'll see the first and last words. Fill in the middle words to create a valid chain of transformations.</p>
-
-                <p class="mb-3">Green circles mean the transformation is valid. Red circles mean it's invalid. Gray circles mean a word is incomplete.</p>
-
-                <p>You win when all circles are green! Your solution doesn't need to match the original - any valid chain works.</p>
+                <p class="mb-3">Circles next to a word indicate if it is a valid word, and between words indicate if the transformation is valid. Green means valid, and red means invalid.</p>
+                <p class="mb-3">When all the circles are green, you win!</p>
             </div>
 
             <div id="completionContent" class="hidden">
@@ -265,7 +263,6 @@
         let currentWords = [];
         let validWords = new Set();
 
-        // Load valid words list and game data
         Promise.all([
             fetch('/static/transformer-valid-words.json').then(response => response.json()),
             fetch('/static/transformer-games.json').then(response => response.json())
@@ -276,7 +273,6 @@
         });
 
         function initializeGame() {
-            // Initialize current words array
             if (gameState.currentWords && gameState.currentWords.length > 0) {
                 currentWords = gameState.currentWords;
             } else {
@@ -292,7 +288,6 @@
 
             renderGame();
 
-            // Select first empty letter
             if (!gameState.complete) {
                 selectNextEmptyLetter();
             }
@@ -303,11 +298,9 @@
             container.innerHTML = '';
 
             for (let i = 0; i < currentWords.length; i++) {
-                // Create container for word and its validation circle
                 const wordContainer = document.createElement('div');
                 wordContainer.className = 'flex justify-center items-center gap-2 mb-2';
 
-                // Render word
                 const wordDiv = document.createElement('div');
                 wordDiv.className = 'flex justify-center gap-1';
 
@@ -327,7 +320,6 @@
 
                     letterBox.textContent = currentWords[i][j];
 
-                    // Highlight selected letter
                     if (selectedLetterIndex && selectedLetterIndex.word === i && selectedLetterIndex.letter === j) {
                         letterBox.classList.add('border-pink-500', 'dark:border-pink-400');
                     }
@@ -337,7 +329,6 @@
 
                 wordContainer.appendChild(wordDiv);
 
-                // Add word validation circle
                 const wordValidationCircle = document.createElement('div');
                 wordValidationCircle.className = 'w-4 h-4 rounded-full';
 
@@ -353,7 +344,6 @@
                 wordContainer.appendChild(wordValidationCircle);
                 container.appendChild(wordContainer);
 
-                // Render validation circle between words
                 if (i < currentWords.length - 1) {
                     const circleDiv = document.createElement('div');
                     circleDiv.className = 'flex justify-center my-1';
@@ -375,19 +365,16 @@
                 }
             }
 
-            // Check for win condition
             checkWinCondition();
         }
 
         function validateWord(word) {
-            // Check if word is incomplete
             if (word.includes('')) {
                 return 'incomplete';
             }
 
             const wordStr = word.join('').toLowerCase();
 
-            // Check if word is in valid words list
             if (validWords.has(wordStr)) {
                 return 'valid';
             } else {
@@ -396,7 +383,6 @@
         }
 
         function validateTransformation(word1, word2) {
-            // Check if either word is incomplete
             if (word1.includes('') || word2.includes('')) {
                 return 'incomplete';
             }
@@ -404,7 +390,6 @@
             const w1 = word1.join('').toLowerCase();
             const w2 = word2.join('').toLowerCase();
 
-            // Check if words are identical (invalid)
             if (w1 === w2) {
                 return 'invalid';
             }
@@ -485,7 +470,10 @@
             if (key === 'backspace') {
                 currentWords[word][letter] = '';
                 setGameState('currentWords', currentWords);
-                renderGame();
+
+                // Move cursor backward
+                moveSelection('left');
+                return;
             } else if (/^[a-z]$/.test(key)) {
                 currentWords[word][letter] = key;
                 setGameState('currentWords', currentWords);
