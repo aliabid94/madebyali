@@ -9,9 +9,23 @@ import nltk
 from nltk.corpus import brown
 from nltk.stem import WordNetLemmatizer
 from collections import Counter
+from pathlib import Path
+import json
+
 
 nltk.download('brown')
 nltk.download('wordnet')
+
+script_dir = Path(__file__).parent
+words_file = script_dir / "fishwish-words.json"
+
+existing_words = []
+rhyme_sets = []
+if words_file.exists():
+    with open(words_file, 'r') as f:
+        for rhyme_set in json.load(f):
+            rhyme_sets.append(rhyme_set)
+            existing_words.extend(rhyme_set)
 
 lemmatizer = WordNetLemmatizer()
 
@@ -32,7 +46,6 @@ for word in brown_words:
 word_freq = Counter(root_words)
 common_words = [word for word, _ in word_freq.most_common(3000)]
 
-
 def get_rhyming_phoneme(word):
     pronunciations = pronouncing.phones_for_word(word)
     if not pronunciations:
@@ -49,7 +62,6 @@ for word in common_words:
 
 rhyme_dict = {k: v for k, v in rhyme_dict.items() if len(v) > 1}
 
-rhyme_sets = []
 for i in range(SET_COUNT):
     rhyme_set = []
     last_phonemes_used = set()
@@ -63,6 +75,8 @@ for i in range(SET_COUNT):
             continue
         words = rhyme_dict[phoneme]
         selected_words = random.sample(words, 2)
+        if any(word in existing_words for word in selected_words):
+            continue
         print(selected_words)
         accept = input("Accept? (y/n): ")
         if accept.lower() != 'y':
@@ -72,8 +86,7 @@ for i in range(SET_COUNT):
             words.remove(word)
         last_phonemes_used.add(last_phoneme)
     rhyme_sets.append(rhyme_set)
+    with open(words_file, 'w') as f:
+        json.dump(rhyme_sets, f, indent=2)
     print(", ".join(rhyme_set))
 
-import json
-with open("fishwish-words.json", "w") as f:
-    json.dump(rhyme_sets, f, indent=2)

@@ -2,441 +2,265 @@
     {
         "left": [
             [
-                "Faded after too much use",
-                "worn"
+                "Impulse hard to resist",
+                "urge"
             ],
             [
-                "Total that's tallied",
-                "amount"
+                "Half-baked idea",
+                "notion"
             ],
             [
-                "What society calls 'average'",
-                "norm"
+                "First letter written by hand?",
+                "initial"
             ],
             [
-                "Language of Moli\u00e8re",
-                "french"
+                "These 'makers' will make your heart pump",
+                "pace"
             ]
         ],
         "right": [
             [
-                "What a unicorn leads with",
-                "horn"
+                "Formally recognized",
+                "official"
             ],
             [
-                "Reserved seat at the courthouse?",
-                "bench"
+                "To substitute",
+                "replace"
             ],
             [
-                "Change shape, like Optimus Prime",
-                "transform"
+                "Nemo's home",
+                "ocean"
             ],
             [
-                "Ledger entry or explanation",
-                "account"
+                "To come into view",
+                "emerge"
             ]
         ],
         "match_order": [
-            0,
             3,
             2,
+            0,
             1
         ]
     },
     {
         "left": [
             [
-                "Color that's cowardly in cartoons",
-                "yellow"
+                "Fence-sharer across the yard",
+                "neighbor"
             ],
             [
-                "What a thief steals in a second",
-                "glance"
+                "a plea, or stylish charm",
+                "appeal"
             ],
             [
-                "Equal in rank, not superior",
-                "peer"
+                "What you do at the ETA",
+                "arrive"
             ],
             [
-                "Vows traded under ritual spotlight",
-                "ceremony"
+                "Six-legged critter",
+                "insect"
             ]
         ],
         "right": [
             [
-                "Sworn words heard under oath",
-                "testimony"
+                "Stamp of approval from the sea?",
+                "seal"
             ],
             [
-                "Money matters, literally",
-                "finance"
+                "Pregnancy, followed by _____",
+                "labor"
             ],
             [
-                "Companion who rhymes with 'bellow'",
-                "fellow"
+                "Prime handful",
+                "five"
             ],
             [
-                "Do a magician\u2019s trick at the finale",
-                "disappear"
-            ]
-        ],
-        "match_order": [
-            2,
-            1,
-            3,
-            0
-        ]
-    },
-    {
-        "left": [
-            [
-                "Mighty but not necessarily large",
-                "strong"
-            ],
-            [
-                "Loosen tension like a slackening rope",
-                "relax"
-            ],
-            [
-                "Tiny bit that physics ponders",
-                "particle"
-            ],
-            [
-                "Brain\u2019s passing visitor, fleeting yet profound",
-                "thought"
-            ]
-        ],
-        "right": [
-            [
-                "Acquired with money, not given",
-                "bought"
-            ],
-            [
-                "Opposite of right in more ways than one",
-                "wrong"
-            ],
-            [
-                "Definite or indefinite, it shapes grammar",
-                "article"
-            ],
-            [
-                "Governments demand it, grudgingly supplied",
-                "tax"
+                "What a detective does",
+                "inspect"
             ]
         ],
         "match_order": [
             1,
-            3,
-            2,
-            0
-        ]
-    },
-    {
-        "left": [
-            [
-                "Fuel for laughter or a car",
-                "gas"
-            ],
-            [
-                "Not these, but ___",
-                "those"
-            ],
-            [
-                "At the same time, elsewhere",
-                "meanwhile"
-            ],
-            [
-                "Trend that quickly goes out of style",
-                "fashion"
-            ]
-        ],
-        "right": [
-            [
-                "Lecture group\u2014or social status",
-                "class"
-            ],
-            [
-                "It burns without flames",
-                "passion"
-            ],
-            [
-                "Force rules on others",
-                "impose"
-            ],
-            [
-                "Woven industry product",
-                "textile"
-            ]
-        ],
-        "match_order": [
             0,
             2,
-            3,
-            1
-        ]
-    },
-    {
-        "left": [
-            [
-                "Occident on a compass",
-                "west"
-            ],
-            [
-                "Direction opposite of up",
-                "down"
-            ],
-            [
-                "Make certain, like a reservation or a suspicion",
-                "confirm"
-            ],
-            [
-                "Uneasy feeling before an exam, perhaps",
-                "anxiety"
-            ]
-        ],
-        "right": [
-            [
-                "Semester\u2019s span in school jargon",
-                "term"
-            ],
-            [
-                "Stop a suspect in their tracks",
-                "arrest"
-            ],
-            [
-                "Different sorts packed in one selection",
-                "variety"
-            ],
-            [
-                "Where main street might lead you",
-                "town"
-            ]
-        ],
-        "match_order": [
-            1,
-            3,
-            0,
-            2
-        ]
-    },
-    {
-        "left": [
-            [
-                "City leader in politics",
-                "mayor"
-            ],
-            [
-                "Smallest portion on the scale",
-                "least"
-            ],
-            [
-                "Bachelor in the forest",
-                "stag"
-            ],
-            [
-                "Texas city with TV fame",
-                "dallas"
-            ]
-        ],
-        "right": [
-            [
-                "Where the sun makes its entrance",
-                "east"
-            ],
-            [
-                "Tattered cloth without respect",
-                "rag"
-            ],
-            [
-                "One still in the game",
-                "player"
-            ],
-            [
-                "Residence fit for royalty",
-                "palace"
-            ]
-        ],
-        "match_order": [
-            2,
-            0,
-            1,
             3
         ]
     },
     {
         "left": [
             [
-                "One followed, not following",
-                "leader"
+                "Done from the pulpit",
+                "preach"
             ],
             [
-                "One who hasn't yet grown up, or grown wise",
-                "child"
+                "Waxing crescent is an example of a moon _____",
+                "phase"
             ],
             [
-                "Flip of a lever, change of direction",
-                "switch"
+                "Absent of light",
+                "dark"
             ],
             [
-                "Where maps once trailed off: 'Here be dragons'",
-                "frontier"
+                "Formal protest at a courtroom",
+                "objection"
             ]
         ],
         "right": [
             [
-                "Untamed, uncultivated, or just a little too free",
-                "wild"
+                "Often found where sand meets sea",
+                "beach"
             ],
             [
-                "Obvious to all, though sometimes invisible",
-                "clear"
+                "A compass provides this",
+                "direction"
             ],
             [
-                "Salesman\u2019s persuasive speech, or a fastball\u2019s flight",
-                "pitch"
+                "Applaud",
+                "praise"
             ],
             [
-                "Always in the margins, never in the margins",
-                "reader"
+                "Green space",
+                "park"
             ]
         ],
         "match_order": [
-            3,
             0,
             2,
+            3,
             1
         ]
     },
     {
         "left": [
             [
-                "Cunning plan, not a simple dream",
-                "scheme"
+                "Line you might find in a stanza",
+                "verse"
             ],
             [
-                "Man of the house, sometimes holy",
-                "father"
+                "Shaper of youthful minds",
+                "teacher"
             ],
             [
-                "Playground path with a fast ending",
-                "slide"
+                "Overflowing, with nothing lacking",
+                "full"
             ],
             [
-                "Vision's verb, not just a noun",
-                "see"
+                "Arrange notes into harmony",
+                "compose"
             ]
         ],
         "right": [
             [
-                "It grows higher but never walks away",
-                "tree"
+                "Caregiver",
+                "nurse"
             ],
             [
-                "Opposite of narrow lane",
-                "wide"
+                "Prominent attribute",
+                "feature"
             ],
             [
-                "Annoyance that rhymes with 'other'",
-                "bother"
+                "Reveal what was hidden",
+                "expose"
             ],
             [
-                "Light travels in this straight line",
-                "beam"
+                "To tug or haul",
+                "pull"
             ]
         ],
         "match_order": [
+            0,
+            1,
             3,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "A daily meal",
+                "dinner"
+            ],
+            [
+                "Posting sought by applicants",
+                "job"
+            ],
+            [
+                "A place for shooting",
+                "range"
+            ],
+            [
+                "Used for boiling pasta",
+                "pot"
+            ]
+        ],
+        "right": [
+            [
+                "Contained within, not the exterior",
+                "inner"
+            ],
+            [
+                "A criminal act",
+                "rob"
+            ],
+            [
+                "Not quite normal",
+                "strange"
+            ],
+            [
+                "Sexy or warm",
+                "hot"
+            ]
+        ],
+        "match_order": [
+            0,
+            1,
             2,
-            1,
-            0
+            3
         ]
     },
     {
         "left": [
             [
-                "Trash it or decline it",
-                "refuse"
+                "Lesson hidden in story\u2019s ending",
+                "moral"
             ],
             [
-                "One apiece, no exceptions",
-                "each"
+                "An evening meal",
+                "supper"
             ],
             [
-                "Private thoughts bound in paper armor",
-                "journal"
+                "Money matters, literally",
+                "finance"
             ],
             [
-                "Mathematical breakup or organizational split",
-                "division"
+                "Snows fate in spring",
+                "melt"
             ]
         ],
         "right": [
             [
-                "Hidden conflict, not external",
-                "internal"
+                "A verbal conflict",
+                "quarrel"
             ],
             [
-                "The tongue's performance without instruments",
-                "speech"
+                "Material emotions are made of?",
+                "felt"
             ],
             [
-                "Crossroads leading to one outcome",
-                "decision"
+                "Opposite of nether",
+                "upper"
             ],
             [
-                "Point the finger in blame",
-                "accuse"
-            ]
-        ],
-        "match_order": [
-            3,
-            1,
-            0,
-            2
-        ]
-    },
-    {
-        "left": [
-            [
-                "Shrink your impact on the planet?",
-                "reduce"
-            ],
-            [
-                "Where a lump forms when nervous",
-                "throat"
-            ],
-            [
-                "Rain or shine decision word",
-                "whether"
-            ],
-            [
-                "Remote\u2019s ultimate purpose",
-                "control"
-            ]
-        ],
-        "right": [
-            [
-                "Not tight, but still attached",
-                "loose"
-            ],
-            [
-                "United in harmony or in chaos",
-                "together"
-            ],
-            [
-                "Bakery item, or to tumble forward",
-                "roll"
-            ],
-            [
-                "Advertise, elevate, advance",
-                "promote"
+                "Roll of the dice, figuratively",
+                "chance"
             ]
         ],
         "match_order": [
             0,
+            2,
             3,
-            1,
-            2
+            1
         ]
     }
 ]

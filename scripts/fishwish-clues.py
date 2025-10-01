@@ -2,7 +2,6 @@ import json
 import os
 from dotenv import load_dotenv
 from openai import OpenAI
-from jsonschema import validate, ValidationError
 
 load_dotenv()
 
@@ -10,21 +9,6 @@ client = OpenAI(
     api_key=os.getenv("OPENAPI_KEY"),
     base_url="https://openrouter.ai/api/v1"
 )
-
-clues_schema = {
-    "type": "array",
-    "items": {
-        "type": "array",
-        "prefixItems": [
-            {"type": "string"},  # clue
-            {"type": "string"}   # word
-        ],
-        "minItems": 2,
-        "maxItems": 2
-    },
-    "minItems": 8,
-    "maxItems": 8
-}
 
 with open('fishwish-words.json', 'r') as f:
     word_sets = json.load(f)
@@ -48,7 +32,6 @@ for i, word_set in enumerate(word_sets):
 
     content = response.choices[0].message.content
 
-    # Parse the JSON response
     if "```json" in content:
         json_start = content.find("```json") + 7
         json_end = content.find("```", json_start)
@@ -58,21 +41,7 @@ for i, word_set in enumerate(word_sets):
         json_end = content.find("```", json_start)
         content = content[json_start:json_end].strip()
 
-    parsed = json.loads(content)
-
-    # Extract clues array if it's wrapped in an object or another string
-    if isinstance(parsed, str):
-        parsed = json.loads(parsed)
-
-    if isinstance(parsed, dict):
-        # Get the first (and should be only) value from the dict
-        clues = next(iter(parsed.values()))
-    else:
-        clues = parsed
-
-    # Validate against schema
-    validate(instance=clues, schema=clues_schema)
-
+    clues = json.loads(content)
     clue_sets.append(clues)
 
 with open('fishwish-clues.json', 'w') as f:

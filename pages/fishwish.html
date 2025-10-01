@@ -170,7 +170,7 @@
         const visitedKey = `${gamename}-visited`;
         const completionsKey = `${gamename}-completions`;
 
-        const firstDay = new Date('2025-09-30');
+        const firstDay = new Date('2025-09-24');
         firstDay.setHours(0, 0, 0, 0);
         const daysSinceFirstDay = Math.floor((today - firstDay) / (1000 * 60 * 60 * 24));
 
@@ -335,11 +335,7 @@
         }
 
         function disableGameInput() {
-            document.getElementById('leftInputBox').style.pointerEvents = 'none';
-            document.getElementById('rightInputBox').style.pointerEvents = 'none';
-            document.querySelector('button[onclick="submitAnswer()"]').disabled = true;
-            document.querySelector('button[onclick="submitAnswer()"]').style.opacity = '0.5';
-
+            document.querySelector(".keyboard").classList.add('hidden');
             window.gameComplete = true;
         }
 
