@@ -57,49 +57,46 @@ def find_anagrams(word):
 
     return results
 
-def explore_word(word, history=None, existing_words=None, types=None):
-    if history is None:
-        history = []
-
-    if types is None:
-        types = {'-': 0, '+': 0, 'r': 0, 'a': 0}
-
-    if existing_words is None:
-        existing_words = {word}
-
+def explore_word(word, max_depth=8):
     word = word.lower()
 
     if word not in common_words:
         print(f"Warning: '{word}' is not in the word bank")
         print()
 
-    removals = find_removals(word)
-    insertions = find_insertions(word)
-    replacements = find_replacements(word)
-    anagrams = find_anagrams(word)
+    queue = [(word, [word], {'-': 0, '+': 0, 'r': 0, 'a': 0})]
+    visited = {word}
 
-    transforms = set(removals + insertions + replacements + anagrams)
-    transforms = [w for w in transforms if w not in existing_words]
+    while queue:
+        current, history, types = queue.pop(0)
+        depth = len(history)
 
-    depth = len(history)
+        if depth >= max_depth:
+            continue
 
-    for t in transforms:
-        existing_words.add(t)
+        removals = find_removals(current)
+        insertions = find_insertions(current)
+        replacements = find_replacements(current)
+        anagrams = find_anagrams(current)
 
-    for t in transforms:
-        ty = dict(types)
-        if t in removals:
-            ty['-'] += 1
-        if t in insertions:
-            ty['+'] += 1
-        if t in replacements:
-            ty['r'] += 1
-        if t in anagrams:
-            ty['a'] += 1
-        if depth > 6 and (ty['r'] > 0 or ty['a'] > 0):
+        transforms = set(removals + insertions + replacements + anagrams)
+        transforms = [w for w in transforms if w not in visited]
+
+        for t in transforms:
+            ty = dict(types)
+            if t in removals:
+                ty['-'] += 1
+            if t in insertions:
+                ty['+'] += 1
+            if t in replacements:
+                ty['r'] += 1
+            if t in anagrams:
+                ty['a'] += 1
+
             print(json.dumps(history + [t]), ty)
-        if depth < 8:
-            explore_word(t, history + [t], existing_words, ty)
+
+            visited.add(t)
+            queue.append((t, history + [t], ty))
 
 while True:
     word = input("Word: ").strip()

@@ -2,6 +2,14 @@
 <html lang="en">
 
 <head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WM5YFXBNP2"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-WM5YFXBNP2');
+    </script>    
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>madebyali</title>
@@ -44,6 +52,12 @@
             style="background-image: url('/static/island/middle.png'); background-size: auto 128px;"></div>
         <img class="absolute left-0 h-full dark:hidden" src='/static/island/left.png' />
         <img class="absolute right-0 h-full dark:hidden" src='/static/island/right.png' />
+
+
+        <div class="absolute h-full w-full hidden dark:block"
+            style="background-image: url('/static/island/dark-middle.png'); background-size: auto 128px;"></div>
+        <img class="absolute left-0 h-full hidden dark:block" src='/static/island/dark-left.png' />
+        <img class="absolute right-0 h-full hidden dark:block" src='/static/island/dark-right.png' />
     </footer>
 </body>
 
