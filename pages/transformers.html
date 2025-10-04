@@ -540,22 +540,12 @@
         }
 
         function checkWinCondition() {
-            // Check if all words are valid
+            // Check if all circles are green (all transformations valid)
             let allValid = true;
-            for (let i = 0; i < currentWords.length; i++) {
-                if (validateWord(currentWords[i]) !== 'valid') {
+            for (let i = 0; i < currentWords.length - 1; i++) {
+                if (validateTransformation(currentWords[i], currentWords[i + 1]) !== 'valid') {
                     allValid = false;
                     break;
-                }
-            }
-
-            // Check if all transformations are valid
-            if (allValid) {
-                for (let i = 0; i < currentWords.length - 1; i++) {
-                    if (validateTransformation(currentWords[i], currentWords[i + 1]) !== 'valid') {
-                        allValid = false;
-                        break;
-                    }
                 }
             }
 

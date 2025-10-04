@@ -1,13 +1,15 @@
 import nltk
 from nltk.corpus import brown
 from collections import Counter
+import random
 
 nltk.download('brown', quiet=True)
 
 brown_words = [word.lower() for word in brown.words() if word.isalpha()]
 
 word_freq = Counter(brown_words)
-common_words = set([word for word, _ in word_freq.most_common(50000)])
+common_words = set([word for word, _ in word_freq.most_common(20000)])
+very_common_words = set([word for word, _ in word_freq.most_common(10000)])
 
 from pathlib import Path
 script_dir = Path(__file__).parent
@@ -57,7 +59,7 @@ def find_anagrams(word):
 
     return results
 
-def explore_word(word, max_depth=8):
+def explore_word(word, max_depth=7, break_on_first=False):
     word = word.lower()
 
     if word not in common_words:
@@ -71,7 +73,7 @@ def explore_word(word, max_depth=8):
         current, history, types = queue.pop(0)
         depth = len(history)
 
-        if depth >= max_depth:
+        if depth > max_depth:
             continue
 
         removals = find_removals(current)
@@ -79,7 +81,9 @@ def explore_word(word, max_depth=8):
         replacements = find_replacements(current)
         anagrams = find_anagrams(current)
 
-        transforms = set(removals + insertions + replacements + anagrams)
+        transforms = removals + insertions + replacements + anagrams
+        random.shuffle(transforms)
+        transforms = set(transforms)
         transforms = [w for w in transforms if w not in visited]
 
         for t in transforms:
@@ -93,11 +97,23 @@ def explore_word(word, max_depth=8):
             if t in anagrams:
                 ty['a'] += 1
 
-            print(json.dumps(history + [t]), ty)
+            if break_on_first:
+                if depth > 5 and (ty['-'] + ty['+'] > 1):
+                    print(json.dumps(history + [t]), ty)
+                    return
+            else:
+                print(json.dumps(history + [t]), ty)
 
             visited.add(t)
             queue.append((t, history + [t], ty))
 
 while True:
     word = input("Word: ").strip()
-    explore_word(word)
+    if not word:
+        while True:
+            while len(word) > 6 or len(word) < 4:
+                word = random.choice(list(very_common_words))
+            explore_word(word, break_on_first=True)
+            word = ""
+    else:
+        explore_word(word)
