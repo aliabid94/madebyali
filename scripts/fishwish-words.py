@@ -6,14 +6,9 @@ SET_COUNT = 10
 SET_SIZE = 8
 
 import nltk
-from nltk.corpus import brown
-from nltk.stem import WordNetLemmatizer
-from collections import Counter
 from pathlib import Path
 import json
 
-
-nltk.download('brown')
 nltk.download('wordnet')
 
 script_dir = Path(__file__).parent
@@ -27,24 +22,20 @@ if words_file.exists():
             rhyme_sets.append(rhyme_set)
             existing_words.extend(rhyme_set)
 
-lemmatizer = WordNetLemmatizer()
+# Load common words from generated JSON
+with open(script_dir.parent / "static" / "common-words.json", 'r') as f:
+    all_common_words = json.load(f)
 
-brown_words = [word.lower() for word in brown.words() if word.isalpha()]
-
-root_words = []
-for word in brown_words:
-    if not word.isalpha() or word.lower() != word:
+# Filter to words with pronunciations and limit to 3000
+common_words = []
+for word in all_common_words:
+    if len(word) < 3:
         continue
-    root = lemmatizer.lemmatize(word, pos='v')
-    root = lemmatizer.lemmatize(root, pos='n')
-    if len(root) < 3:
+    if not pronouncing.phones_for_word(word):
         continue
-    if not pronouncing.phones_for_word(root):
-        continue
-    root_words.append(root)
-
-word_freq = Counter(root_words)
-common_words = [word for word, _ in word_freq.most_common(3000)]
+    common_words.append(word)
+    if len(common_words) >= 3000:
+        break
 
 def get_rhyming_phoneme(word):
     pronunciations = pronouncing.phones_for_word(word)

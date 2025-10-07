@@ -1,11 +1,11 @@
 [
     ["tore", "store", "stored", "stowed", "towed", "towel", "vowel"],
-    ["clock", "click", "slick", "sick", "sink", "knit", "knot", "knob"],
-    ["dice", "die", "pie", "pier", "ripen", "risen", "siren"],
+    ["clock", "click", "slick", "sick", "sink", "stink", "knits", "knots"],
+    ["dice", "die", "pie", "pier", "ripe", "ripen", "risen", "siren"],
     ["snake", "snare", "snore", "sore", "rose", "pose", "poise"],
     ["plane", "plate", "petal", "peal", "plea", "flea", "flee"],
     ["crane", "crave", "brave", "brake", "baker", "maker", "marker"],
-    ["flame", "frame", "framer", "farmer", "former", "form", "foam"],
+    ["flame", "frame", "framer", "farmer", "former", "formed", "deform"],
     ["cone", "tone", "stone", "notes", "noses", "noises"],
     ["cake", "coke", "choke", "chose", "those", "these", "sheet"],
     ["tailed", "detail", "retail", "retain", "retrain", "terrain"],
@@ -19,10 +19,4 @@
     ["vessels", "vessel", "selves", "serves", "nerves", "nerve"],
     ["acid", "amid", "mid", "mad", "made", "mate", "team", "steam"],
     ["strain", "train", "grain", "grin", "gin", "sin", "sign", "sigh"]
-
-
-
-
-
-
 ]

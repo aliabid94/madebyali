@@ -1,22 +1,15 @@
-import nltk
-from nltk.corpus import brown
-from collections import Counter
 import random
-
-nltk.download('brown', quiet=True)
-
-brown_words = [word.lower() for word in brown.words() if word.isalpha()]
-
-word_freq = Counter(brown_words)
-common_words = set([word for word, _ in word_freq.most_common(20000)])
-very_common_words = set([word for word, _ in word_freq.most_common(10000)])
-
 from pathlib import Path
+import json
+
 script_dir = Path(__file__).parent
 
-import json
-with open(script_dir.parent / "static" / "transformer-valid-words.json", 'w') as f:
-    json.dump(list(common_words), f)
+# Load common words from generated JSON
+with open(script_dir.parent / "static" / "common-words.json", 'r') as f:
+    common_words_list = json.load(f)
+
+common_words = set(common_words_list)
+very_common_words = set(common_words_list[:10000])
 
 def find_removals(word):
     """Find valid words by removing a single letter."""
