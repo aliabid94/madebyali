@@ -23,35 +23,33 @@ nav {
     @apply mb-4;
 }
 
-.index {
-    .card {
-        @apply relative h-40 bg-gray-100 dark:bg-gray-800 rounded flex justify-center items-center p-2 text-center;
-    }
+.link-card {
+    @apply relative h-40 bg-gray-100 dark:bg-gray-800 rounded flex justify-center items-center p-2 text-center;
+}
 
-    .card .title {
-        @apply font-semibold transition-all;
-    }
+.link-card .title {
+    @apply font-semibold transition-all;
+}
 
-    .card:hover .title {
-        @apply scale-110;
-    }
+.link-card:hover .title {
+    @apply scale-110;
+}
 
-    .card .details {
-        @apply absolute bottom-0 text-sm bg-white dark:bg-black bg-opacity-60 p-1 m-1 rounded;
-    }
+.link-card .details {
+    @apply absolute bottom-0 text-sm bg-white dark:bg-black bg-opacity-60 p-1 m-1 rounded;
+}
 
-    .card-tag {
-        @apply absolute top-0 -right-2 px-1.5 py-0.5 rounded-full transform rotate-12 z-10;
-        font-size: 11px;
-    }
+.link-card-tag {
+    @apply absolute top-0 -right-2 px-1.5 py-0.5 rounded-full transform rotate-12 z-10;
+    font-size: 11px;
+}
 
-    .coming-soon {
-        @apply bg-red-500 text-white;
-    }
+.coming-soon {
+    @apply bg-red-500 text-white;
+}
 
-    .new-daily {
-        @apply bg-green-700 text-white;
-    }
+.new-daily {
+    @apply bg-green-700 text-white;
 }
 
 .fishwish {
@@ -126,4 +124,38 @@ nav {
     75% {
         transform: translateX(5px);
     }
+}
+
+@keyframes winFlash {
+    0% {
+        scale: 1;
+    }
+
+    50% {
+        scale: 1.1;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes modalPopIn {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.win-flash {
+    animation: winFlash 0.3s cubic-bezier(0.68, -0.55, 0.32, 1.55);
+}
+
+.modal-pop-in {
+    animation: modalPopIn 0.3s ease-out;
 }

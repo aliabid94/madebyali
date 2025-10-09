@@ -107,9 +107,18 @@
             </div>
 
             <div id="completionContent" class="hidden">
-                <p class="mb-4">You completed today's fishwish puzzle!</p>
-                <p class="font-semibold">Time: <span id="completionTime"></span></p>
-                <p class="font-semibold">Streak: <span id="completionStreak"></span></p>
+                <p>You completed today's fishwish puzzle!</p>
+                <p>Time: <span class="font-semibold" id="completionTime"></span></p>
+                <p>Streak: <span class="font-semibold" id="completionStreak"></span></p>
+                <button id="shareBtn" class="mt-1 mb-6 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium w-full">Share</button>
+                <div>
+                    <p class="mb-3">Another puzzle you may like!</p>
+                    <a href="/transformers" class="link-card block no-underline">
+                        <div class="link-card-tag new-daily">New Puzzle Daily</div>
+                        <div class="title">transformers</div>
+                        <div class="details">Transform words one letter at a time to reach your destination.</div>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -171,8 +180,13 @@
         let timerInterval;
         let isTimerRunning = false;
 
+        // Get offset from URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const offset = parseInt(urlParams.get('offset')) || 0;
+
         const today = new Date();
         today.setHours(0, 0, 0, 0);
+        today.setDate(today.getDate() + offset);
         const todayString = today.toLocaleDateString('en-US');
         const gameKey = `${gamename}-${todayString}`;
         const visitedKey = `${gamename}-visited`;
@@ -259,6 +273,9 @@
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
+
+            const modalContent = modal.querySelector('div');
+            modalContent.classList.add('modal-pop-in');
         }
 
         if (!visitedState) {
@@ -574,14 +591,36 @@
             }
         }
 
-        function handleGameCompletion() {
+        function handleGameCompletion(animate = true) {
             stopTimer();
-            disableGameInput();
-            showCompletionModal();
+
+            if (animate) {
+                const cardsContainer = document.getElementById('cards');
+                cardsContainer.classList.add('win-flash');
+
+                setTimeout(() => {
+                    disableGameInput();
+                    showCompletionModal();
+                }, 500);
+            } else {
+                disableGameInput();
+                showCompletionModal();
+            }
         }
         if (gameState.complete) {
-            handleGameCompletion();
+            handleGameCompletion(false);
         }
+
+        document.getElementById('shareBtn').addEventListener('click', function() {
+            const btn = this;
+            const originalText = btn.textContent;
+            navigator.clipboard.writeText(window.location.href).then(() => {
+                btn.textContent = 'Copied to Clipboard!';
+                setTimeout(() => {
+                    btn.textContent = originalText;
+                }, 2000);
+            });
+        });
     </script>
 </body>
 

@@ -5,6 +5,8 @@ from openai import OpenAI
 
 load_dotenv()
 
+MODEL = "qwen/qwen3-vl-235b-a22b-instruct"
+
 client = OpenAI(
     api_key=os.getenv("OPENAPI_KEY"),
     base_url="https://openrouter.ai/api/v1"
@@ -25,9 +27,8 @@ for i, word_set in enumerate(word_sets):
     for word in word_set:
         prompt = f'Create 3 different crossword clues for the word "{word}". Make each clue each under 12 words, clever, and varied in difficulty and style. Do not make them a simple definition, they should be more clever than that. Don\'t make them too easy, so don\'t try to give multiple hints in the clue. Return the response as an array of strings. For example: ["clue1", "clue2", "clue3"].'
 
-        print(f"Generating clues for '{word}' with prompt: {prompt}")
         response = client.chat.completions.create(
-            model="anthropic/claude-sonnet-4.5",
+            model=MODEL,
             messages=[
                 {"role": "user", "content": prompt}
             ],
@@ -36,7 +37,7 @@ for i, word_set in enumerate(word_sets):
         )
 
         content = response.choices[0].message.content
-        print(f"Raw response for '{word}': {content}")
+        print(word, content)
 
         if "```json" in content:
             json_start = content.find("```json") + 7

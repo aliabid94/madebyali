@@ -28,10 +28,11 @@ for clue_set in clue_sets:
     match_order = list(range(4))
 
     combined = list(zip(left, match_order))
-    random.shuffle(combined)
-    left, match_order = zip(*combined)
-    left = list(left)
-    match_order = list(match_order)
+    while match_order == [0, 1, 2, 3]:
+        random.shuffle(combined)
+        left, match_order = zip(*combined)
+        left = list(left)
+        match_order = list(match_order)
 
     game = {
         "left": left,
