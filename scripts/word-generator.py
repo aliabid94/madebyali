@@ -3,7 +3,7 @@
 Generate common-words.json and all-words.json for word games.
 
 common-words.json: 20k most common words from NLTK Brown corpus
-all-words.json: 50k most common from Brown + all words length > 5 from comprehensive list
+all-words.json: 50k most common from Brown + 50k from Reuters + all words length > 5 from comprehensive list
 """
 
 import json
@@ -25,12 +25,25 @@ except LookupError:
     print("Downloading NLTK WordNet...")
     nltk.download('wordnet')
 
+try:
+    nltk.data.find('corpora/reuters')
+except LookupError:
+    print("Downloading NLTK Reuters corpus...")
+    nltk.download('reuters')
+
 
 def get_brown_words():
     """Get word frequency from Brown corpus."""
     print("Loading Brown corpus...")
     brown_words = [word.lower() for word in nltk.corpus.brown.words() if word.isalpha()]
     return Counter(brown_words)
+
+
+def get_reuters_words():
+    """Get word frequency from Reuters corpus."""
+    print("Loading Reuters corpus...")
+    reuters_words = [word.lower() for word in nltk.corpus.reuters.words() if word.isalpha()]
+    return Counter(reuters_words)
 
 
 def get_comprehensive_words():
@@ -63,8 +76,13 @@ def main():
     common_words = most_common_brown[:20000]
     print(f"Generated {len(common_words)} common words")
 
-    # Generate all-words.json (50k most common + long words from comprehensive list)
+    # Get Reuters corpus word frequencies
+    reuters_freq = get_reuters_words()
+    most_common_reuters = [word for word, _ in reuters_freq.most_common()]
+
+    # Generate all-words.json (50k most common from Brown + 20k from Reuters + long words from comprehensive list)
     all_words_set = set(most_common_brown[:50000])
+    all_words_set.update(set(most_common_reuters[:20000]))
 
     # Add all words length > 5 from comprehensive list
     comprehensive = get_comprehensive_words()
