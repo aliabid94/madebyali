@@ -34,7 +34,7 @@
         <button id="howToPlayBtn" class="outline-none hover:underline text-xs sm:text-base">how to play</button>
     </nav>
     <main class="mx-auto container px-4 flex-1">
-        <div id="cards" class="card-grid mb-4 relative">
+        <div id="cards" class="card-grid mb-8 relative">
             <div class="card">
                 <div class="clue"></div>
                 <div class="answer"></div>
@@ -110,6 +110,7 @@
                 <p>You completed today's fishwish puzzle!</p>
                 <p>Time: <span class="font-semibold" id="completionTime"></span></p>
                 <p>Streak: <span class="font-semibold" id="completionStreak"></span></p>
+                <p>No Clue Streak: <span class="font-semibold" id="completionNoHintStreak"></span></p>
                 <button id="shareBtn" class="mt-1 mb-6 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium w-full">Share</button>
                 <div>
                     <p class="mb-3">Another puzzle you may like!</p>
@@ -125,6 +126,9 @@
 
     <div
         class="keyboard sticky bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 bg-opacity-50 dark:bg-opacity-50 z-20">
+        <div class="absolute bottom-full left-0 flex w-full justify-center">
+            <button id="hintButton" class="rounded-t border border-b-0 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-1">Get Hint</button>
+        </div>
         <div class="max-w-xl mx-auto">
             <div class="flex gap-2 mb-3 justify-center" id="inputBoxes">
                 <div class="input-box flex-1 border-2 border-gray-300 dark:border-gray-500 rounded-lg px-4 py-2 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 cursor-text"
@@ -192,7 +196,7 @@
         const visitedKey = `${gamename}-visited`;
         const completionsKey = `${gamename}-completions`;
 
-        const firstDay = new Date('2025-09-29');
+        const firstDay = new Date('2025-10-03');
         firstDay.setHours(0, 0, 0, 0);
         const daysSinceFirstDay = Math.floor((today - firstDay) / (1000 * 60 * 60 * 24));
 
@@ -206,6 +210,8 @@
                 elapsedTime: 0,
                 complete: false,
                 solvedClues: [],
+                hintsUsed: [],
+                usedHint: false,
             };
         }
         let visitedState = localStorage.getItem(visitedKey);
@@ -217,6 +223,13 @@
             completionsState = JSON.parse(completionsState);
         } else {
             completionsState = [];
+        }
+        const noHintCompletionsKey = `${gamename}-no-hint-completions`;
+        let noHintCompletionsState = localStorage.getItem(noHintCompletionsKey);
+        if (noHintCompletionsState) {
+            noHintCompletionsState = JSON.parse(noHintCompletionsState);
+        } else {
+            noHintCompletionsState = [];
         }
 
         function setGameState(key, value) {
@@ -255,8 +268,17 @@
 
             document.getElementById('completionTime').textContent = timeString;
 
+            // Track completions
             if (!completionsState.includes(todayString)) completionsState.push(todayString);
             localStorage.setItem(completionsKey, JSON.stringify(completionsState));
+
+            // Track no-hint completions
+            if (!gameState.usedHint && !noHintCompletionsState.includes(todayString)) {
+                noHintCompletionsState.push(todayString);
+                localStorage.setItem(noHintCompletionsKey, JSON.stringify(noHintCompletionsState));
+            }
+
+            // Calculate overall streak
             let streak = 0;
             let currentDate = new Date();
             for (let i = completionsState.length - 1; i >= 0; i--) {
@@ -269,7 +291,21 @@
                 }
             }
 
+            // Calculate no-hint streak
+            let noHintStreak = 0;
+            let noHintCurrentDate = new Date();
+            for (let i = noHintCompletionsState.length - 1; i >= 0; i--) {
+                const completionDate = new Date(noHintCompletionsState[i]);
+                if ((noHintCurrentDate - completionDate) / (1000 * 60 * 60 * 24) < 1) {
+                    noHintStreak++;
+                    noHintCurrentDate.setDate(noHintCurrentDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+
             document.getElementById('completionStreak').textContent = `${streak} day${streak !== 1 ? 's' : ''}`;
+            document.getElementById('completionNoHintStreak').textContent = `${noHintStreak} day${noHintStreak !== 1 ? 's' : ''}`;
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -353,9 +389,51 @@
 
                 leftCard.querySelector('.clue').textContent = game.left[i][0];
                 leftCard.querySelector('.answer').textContent = game.left[i][1];
+                leftCard.dataset.leftIndex = i;
 
                 rightCard.querySelector('.clue').textContent = game.right[i][0];
                 rightCard.querySelector('.answer').textContent = game.right[i][1];
+                rightCard.dataset.rightIndex = i;
+            }
+            updateHintDisplay();
+        }
+
+        function updateHintDisplay() {
+            // Update letter count hints on cards
+            const cardsContainer = document.getElementById('cards');
+            for (let i = 0; i < game.left.length; i++) {
+                const leftCard = cardsContainer.children[i * 2];
+                const leftClue = leftCard.querySelector('.clue');
+
+                const leftAnswer = game.left[i][1];
+                const rightIndex = game.match_order[i];
+                const rightCard = cardsContainer.children[rightIndex * 2 + 1];
+                const rightClue = rightCard.querySelector('.clue');
+
+                const rightAnswer = game.right[rightIndex][1];
+
+                if ((gameState.hintsUsed || []).includes(i) && !gameState.solvedClues.includes(i)) {
+                    const leftBaseText = game.left[i][0];
+                    const rightBaseText = game.right[rightIndex][0];
+                    leftClue.classList.add("win-flash");
+                    rightClue.classList.add("win-flash");
+                    leftClue.textContent = `${leftBaseText} (${leftAnswer.length})`;
+                    rightClue.textContent = `${rightBaseText} (${rightAnswer.length})`;
+                }
+            }
+
+            const hintButton = document.getElementById('hintButton');
+            const unsolvedWithoutHint = [];
+            for (let i = 0; i < game.left.length; i++) {
+                if (!gameState.solvedClues.includes(i) && !(gameState.hintsUsed || []).includes(i)) {
+                    unsolvedWithoutHint.push(i);
+                }
+            }
+
+            if (unsolvedWithoutHint.length === 0 || gameState.complete) {
+                hintButton.style.display = 'none';
+            } else {
+                hintButton.style.display = 'block';
             }
         }
 
@@ -369,6 +447,62 @@
         }
 
         function drawLines(fadeIn = true) {
+            // Draw hint lines (gray) for hints that haven't been solved yet
+            for (const left of gameState.hintsUsed || []) {
+                if (gameState.solvedClues.includes(left)) continue; // Skip if already solved
+
+                const right = game.match_order[left];
+                const from = document.querySelector(`#cards .card:nth-child(${left * 2 + 1})`);
+                const to = document.querySelector(`#cards .card:nth-child(${right * 2 + 2})`);
+
+                const fromRect = from.getBoundingClientRect();
+                const toRect = to.getBoundingClientRect();
+
+                const fromCenter = {
+                    x: fromRect.right - 4,
+                    y: fromRect.top + fromRect.height / 2 + window.scrollY
+                };
+
+                const toCenter = {
+                    x: toRect.left + 4,
+                    y: toRect.top + toRect.height / 2 + window.scrollY
+                };
+
+                const svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+                const line = document.createElementNS('http://www.w3.org/2000/svg', 'line');
+
+                svg.style.position = 'absolute';
+                svg.style.top = '0';
+                svg.style.left = '0';
+                svg.style.width = '100vw';
+                svg.style.height = '100vh';
+                svg.style.pointerEvents = 'none';
+
+                if (fadeIn) {
+                    svg.style.zIndex = '1';
+                    svg.style.opacity = '0';
+                    svg.style.transition = 'opacity 150ms ease-out';
+                }
+
+                line.classList.add('stroke-gray-100', 'dark:stroke-gray-800');
+                line.setAttribute('x1', fromCenter.x);
+                line.setAttribute('y1', fromCenter.y);
+                line.setAttribute('x2', toCenter.x);
+                line.setAttribute('y2', toCenter.y);
+                line.setAttribute('stroke-linecap', 'round');
+                line.setAttribute('stroke-width', '8');
+
+                svg.appendChild(line);
+                document.body.appendChild(svg);
+
+                if (fadeIn) {
+                    requestAnimationFrame(() => {
+                        svg.style.opacity = '1';
+                    });
+                }
+            }
+
+            // Draw solved lines (colored)
             for (const left of gameState.solvedClues) {
                 const right = game.match_order[left];
                 const from = document.querySelector(`#cards .card:nth-child(${left * 2 + 1})`);
@@ -580,6 +714,7 @@
                 window.setTimeout(() => {
                     clearLines();
                     drawLines();
+                    updateHintDisplay();
 
                     if (gameState.solvedClues.length === game.left.length) {
                         setGameState('complete', true);
@@ -620,6 +755,35 @@
                     btn.textContent = originalText;
                 }, 2000);
             });
+        });
+
+        document.getElementById('hintButton').addEventListener('click', function() {
+            if (gameState.complete) return;
+
+            // Find an unsolved clue that doesn't have a hint yet
+            let unsolvedWithoutHint = [];
+            for (let i = 0; i < game.left.length; i++) {
+                if (!gameState.solvedClues.includes(i) && !(gameState.hintsUsed || []).includes(i)) {
+                    unsolvedWithoutHint.push(i);
+                }
+            }
+
+            if (unsolvedWithoutHint.length === 0) return;
+
+            // Pick the first unsolved clue without a hint
+            const hintIndex = unsolvedWithoutHint[0];
+
+            // Add to hintsUsed array
+            if (!gameState.hintsUsed) gameState.hintsUsed = [];
+            setGameState('hintsUsed', [...gameState.hintsUsed, hintIndex]);
+            setGameState('usedHint', true);
+
+            // Redraw lines and update display
+            window.setTimeout(() => {
+                clearLines();
+                drawLines();
+                updateHintDisplay();
+            }, 0);
         });
     </script>
 </body>

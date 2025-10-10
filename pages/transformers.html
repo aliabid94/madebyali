@@ -66,6 +66,7 @@
                 <p>You completed today's transformers puzzle!</p>
                 <p>Time: <span class="font-semibold" id="completionTime"></span></p>
                 <p>Streak: <span class="font-semibold" id="completionStreak"></span></p>
+                <p>No Clue Streak: <span class="font-semibold" id="completionNoHintStreak"></span></p>
                 <button id="shareBtn" class="mt-1 mb-6 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium w-full">Share</button>
                 <div>
                     <p class="mb-3">Another puzzle you may like!</p>
@@ -81,6 +82,9 @@
 
     <div
         class="keyboard sticky bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 bg-opacity-50 dark:bg-opacity-50 z-20">
+        <div class="absolute bottom-full left-0 flex w-full justify-center">
+            <button id="hintButton" class="rounded-t border border-b-0 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-1 hidden">Get Hint</button>
+        </div>
         <div class="max-w-xl mx-auto">
             <div class="grid grid-cols-10 gap-1 sm:gap-2 mb-2">
                 <button class="key" data-key="q">Q</button>
@@ -140,7 +144,7 @@
         const visitedKey = `${gamename}-visited`;
         const completionsKey = `${gamename}-completions`;
 
-        const firstDay = new Date('2025-09-29');
+        const firstDay = new Date('2025-10-03');
         firstDay.setHours(0, 0, 0, 0);
         const daysSinceFirstDay = Math.floor((today - firstDay) / (1000 * 60 * 60 * 24));
 
@@ -154,6 +158,7 @@
                 elapsedTime: 0,
                 complete: false,
                 currentWords: [],
+                usedHint: false,
             };
         }
         let visitedState = localStorage.getItem(visitedKey);
@@ -165,6 +170,13 @@
             completionsState = JSON.parse(completionsState);
         } else {
             completionsState = [];
+        }
+        const noHintCompletionsKey = `${gamename}-no-hint-completions`;
+        let noHintCompletionsState = localStorage.getItem(noHintCompletionsKey);
+        if (noHintCompletionsState) {
+            noHintCompletionsState = JSON.parse(noHintCompletionsState);
+        } else {
+            noHintCompletionsState = [];
         }
 
         function setGameState(key, value) {
@@ -205,6 +217,13 @@
 
             if (!completionsState.includes(todayString)) completionsState.push(todayString);
             localStorage.setItem(completionsKey, JSON.stringify(completionsState));
+
+            // Track no-hint completions
+            if (!gameState.usedHint && !noHintCompletionsState.includes(todayString)) {
+                noHintCompletionsState.push(todayString);
+                localStorage.setItem(noHintCompletionsKey, JSON.stringify(noHintCompletionsState));
+            }
+
             let streak = 0;
             let currentDate = new Date();
             for (let i = completionsState.length - 1; i >= 0; i--) {
@@ -217,7 +236,21 @@
                 }
             }
 
+            // Calculate no-hint streak
+            let noHintStreak = 0;
+            let noHintCurrentDate = new Date();
+            for (let i = noHintCompletionsState.length - 1; i >= 0; i--) {
+                const completionDate = new Date(noHintCompletionsState[i]);
+                if ((noHintCurrentDate - completionDate) / (1000 * 60 * 60 * 24) < 1) {
+                    noHintStreak++;
+                    noHintCurrentDate.setDate(noHintCurrentDate.getDate() - 1);
+                } else {
+                    break;
+                }
+            }
+
             document.getElementById('completionStreak').textContent = `${streak} day${streak !== 1 ? 's' : ''}`;
+            document.getElementById('completionNoHintStreak').textContent = `${noHintStreak} day${noHintStreak !== 1 ? 's' : ''}`;
 
             modal.classList.remove('hidden');
             modal.classList.add('flex');
@@ -402,6 +435,72 @@
             }
 
             checkWinCondition();
+            updateHintButtonVisibility();
+        }
+
+        function updateHintButtonVisibility() {
+            const hintButton = document.getElementById('hintButton');
+
+            if (gameState.complete) {
+                hintButton.classList.add('hidden');
+                return;
+            }
+
+            // Check if first editable word (index 1) is complete
+            const firstEditableWord = currentWords[1];
+            const isFirstWordComplete = !firstEditableWord.includes('');
+
+            if (isFirstWordComplete) {
+                hintButton.classList.remove('hidden');
+            } else {
+                hintButton.classList.add('hidden');
+            }
+        }
+
+        function showTemporaryPopup(message) {
+            // Create popup element
+            const popup = document.createElement('div');
+            popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-6 py-4 rounded-lg shadow-lg z-50 text-center';
+            popup.textContent = message;
+            document.body.appendChild(popup);
+
+            // Remove after 2 seconds
+            setTimeout(() => {
+                popup.remove();
+            }, 2000);
+        }
+
+        function validateUserProgress() {
+            // Loop through user-entered words (skip first word which is given)
+            for (let i = 1; i < currentWords.length - 1; i++) {
+                const word = currentWords[i];
+
+                // Check if word is incomplete
+                if (word.includes('')) {
+                    // This is the first incomplete word
+                    if (i === 1) {
+                        showTemporaryPopup('Complete the first word to get started');
+                    } else {
+                        const lastCompletedWord = currentWords[i - 1].join('').toUpperCase();
+                        showTemporaryPopup(`All words through ${lastCompletedWord} are correct!`);
+                    }
+                    return;
+                }
+
+                // Check if word matches the correct answer from game array
+                const userWord = word.join('').toLowerCase();
+                const correctWord = game[i].toLowerCase();
+
+                if (userWord !== correctWord) {
+                    const invalidWord = word.join('').toUpperCase();
+                    showTemporaryPopup(`Word ${invalidWord} is incorrect`);
+                    return;
+                }
+            }
+
+            // If we get here, all user words are correct
+            const lastUserWord = currentWords[currentWords.length - 2].join('').toUpperCase();
+            showTemporaryPopup(`Everything up to ${lastUserWord} is correct`);
         }
 
         function validateWord(word) {
@@ -647,6 +746,17 @@
                 e.preventDefault();
                 handleKeyPress(e.key.toLowerCase());
             }
+        });
+
+        // Hint button event listener
+        document.getElementById('hintButton').addEventListener('click', function() {
+            if (gameState.complete) return;
+
+            // Mark that hint was used
+            setGameState('usedHint', true);
+
+            // Validate user progress
+            validateUserProgress();
         });
     </script>
 </body>
