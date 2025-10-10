@@ -749,7 +749,11 @@
         document.getElementById('shareBtn').addEventListener('click', function() {
             const btn = this;
             const originalText = btn.textContent;
-            navigator.clipboard.writeText(window.location.href).then(() => {
+            const minutes = Math.floor(gameState.elapsedTime / 60);
+            const seconds = gameState.elapsedTime % 60;
+            const timeString = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            const shareMessage = `Beat my time ${timeString} at fishwish: ${window.location.href}`;
+            navigator.clipboard.writeText(shareMessage).then(() => {
                 btn.textContent = 'Copied to Clipboard!';
                 setTimeout(() => {
                     btn.textContent = originalText;
