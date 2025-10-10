@@ -5,7 +5,7 @@ from openai import OpenAI
 
 load_dotenv()
 
-MODEL = "qwen/qwen3-vl-235b-a22b-instruct"
+MODEL = "openai/gpt-5-chat"
 
 client = OpenAI(
     api_key=os.getenv("OPENAPI_KEY"),
@@ -48,8 +48,7 @@ for i, word_set in enumerate(word_sets):
             json_end = content.find("```", json_start)
             content = content[json_start:json_end].strip()
 
-        clues = [word, json.loads(content)]
-        print(f"Generated clues for '{word}': {clues[1]}")
+        clues = [json.loads(content), word]
         clue_set.append(clues)
     clue_sets.append(clue_set)
 

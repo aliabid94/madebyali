@@ -2,20 +2,20 @@
     {
         "left": [
             [
-                "Half-baked idea",
-                "notion"
+                "First letter written by hand?",
+                "initial"
             ],
             [
-                "These 'makers' will make your heart pump",
-                "pace"
+                "Half-baked idea",
+                "notion"
             ],
             [
                 "Impulse hard to resist",
                 "urge"
             ],
             [
-                "First letter written by hand?",
-                "initial"
+                "These 'makers' will make your heart pump",
+                "pace"
             ]
         ],
         "right": [
@@ -37,14 +37,22 @@
             ]
         ],
         "match_order": [
+            0,
             2,
-            1,
             3,
-            0
+            1
         ]
     },
     {
         "left": [
+            [
+                "A plea, or stylish charm",
+                "appeal"
+            ],
+            [
+                "Six-legged critter",
+                "insect"
+            ],
             [
                 "Fence-sharer across the yard",
                 "neighbor"
@@ -52,14 +60,6 @@
             [
                 "What you do at the ETA",
                 "arrive"
-            ],
-            [
-                "Six-legged critter",
-                "insect"
-            ],
-            [
-                "A plea, or stylish charm",
-                "appeal"
             ]
         ],
         "right": [
@@ -81,29 +81,29 @@
             ]
         ],
         "match_order": [
-            1,
-            2,
+            0,
             3,
-            0
+            1,
+            2
         ]
     },
     {
         "left": [
             [
-                "Formal protest at a courtroom",
-                "objection"
+                "Absent of light",
+                "dark"
             ],
             [
-                "Waxing crescent, for example",
-                "phase"
+                "Formal protest at a courtroom",
+                "objection"
             ],
             [
                 "Done from the pulpit",
                 "preach"
             ],
             [
-                "Absent of light",
-                "dark"
+                "Waxing crescent, for example",
+                "phase"
             ]
         ],
         "right": [
@@ -125,29 +125,29 @@
             ]
         ],
         "match_order": [
+            3,
             1,
-            2,
             0,
-            3
+            2
         ]
     },
     {
         "left": [
             [
-                "Shaper of youthful minds",
-                "teacher"
-            ],
-            [
                 "Line you might find in a stanza",
                 "verse"
+            ],
+            [
+                "Arrange notes into harmony",
+                "compose"
             ],
             [
                 "Overflowing, with nothing lacking",
                 "full"
             ],
             [
-                "Arrange notes into harmony",
-                "compose"
+                "Shaper of youthful minds",
+                "teacher"
             ]
         ],
         "right": [
@@ -169,22 +169,14 @@
             ]
         ],
         "match_order": [
-            1,
             0,
+            2,
             3,
-            2
+            1
         ]
     },
     {
         "left": [
-            [
-                "A daily meal",
-                "dinner"
-            ],
-            [
-                "Posting sought by applicants",
-                "job"
-            ],
             [
                 "A place for shooting",
                 "range"
@@ -192,6 +184,14 @@
             [
                 "Used for boiling pasta",
                 "pot"
+            ],
+            [
+                "A daily meal",
+                "dinner"
+            ],
+            [
+                "Posting sought by applicants",
+                "job"
             ]
         ],
         "right": [
@@ -213,29 +213,29 @@
             ]
         ],
         "match_order": [
-            0,
-            1,
             2,
-            3
+            3,
+            0,
+            1
         ]
     },
     {
         "left": [
             [
-                "Lesson hidden in story\u2019s ending",
-                "moral"
+                "An evening meal",
+                "supper"
             ],
             [
                 "Money matters, literally",
                 "finance"
             ],
             [
-                "Snows fate in spring",
-                "melt"
+                "Lesson hidden in story\u2019s ending",
+                "moral"
             ],
             [
-                "An evening meal",
-                "supper"
+                "Snows fate in spring",
+                "melt"
             ]
         ],
         "right": [
@@ -254,6 +254,226 @@
             [
                 "Roll of the dice, figuratively",
                 "chance"
+            ]
+        ],
+        "match_order": [
+            2,
+            3,
+            0,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Sculpture offering comfort?",
+                "relief"
+            ],
+            [
+                "Pull to unravel",
+                "thread"
+            ],
+            [
+                "Not on top",
+                "beneath"
+            ],
+            [
+                "Last letter repeated",
+                "sleep"
+            ]
+        ],
+        "right": [
+            [
+                "Hard to fathom",
+                "deep"
+            ],
+            [
+                "In combs and under pillows",
+                "teeth"
+            ],
+            [
+                "One option over another",
+                "instead"
+            ],
+            [
+                "Top dog",
+                "chief"
+            ]
+        ],
+        "match_order": [
+            3,
+            2,
+            1,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Unconscious vision",
+                "dream"
+            ],
+            [
+                "Shortened midweek commitment?",
+                "wed"
+            ],
+            [
+                "Can be small, trash, or pillow",
+                "talk"
+            ],
+            [
+                "Military rank",
+                "colonel"
+            ]
+        ],
+        "right": [
+            [
+                "Housed within",
+                "internal"
+            ],
+            [
+                "Daily dough that rises to the occasion",
+                "bread"
+            ],
+            [
+                "Combative bird",
+                "hawk"
+            ],
+            [
+                "Recurring idea",
+                "theme"
+            ]
+        ],
+        "match_order": [
+            3,
+            1,
+            2,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Stadium fan activity",
+                "wave"
+            ],
+            [
+                "Work out this clue",
+                "exercise"
+            ],
+            [
+                "Jot it down",
+                "note"
+            ],
+            [
+                "Oxygen intake",
+                "breath"
+            ]
+        ],
+        "right": [
+            [
+                "Result of grave circumstances",
+                "death"
+            ],
+            [
+                "Become aware",
+                "realize"
+            ],
+            [
+                "Strong desire",
+                "crave"
+            ],
+            [
+                "One of a fleet",
+                "boat"
+            ]
+        ],
+        "match_order": [
+            2,
+            1,
+            3,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Strike limit",
+                "three"
+            ],
+            [
+                "Rollercoaster requirement",
+                "height"
+            ],
+            [
+                "Keeps watch",
+                "guard"
+            ],
+            [
+                "Keep jam for later?",
+                "preserve"
+            ]
+        ],
+        "right": [
+            [
+                "Starts at sunset",
+                "night"
+            ],
+            [
+                "Throw batters off",
+                "curve"
+            ],
+            [
+                "Has a suit, potential royalty",
+                "card"
+            ],
+            [
+                "Not quite an ocean",
+                "sea"
+            ]
+        ],
+        "match_order": [
+            3,
+            0,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Kin be removed?",
+                "cousin"
+            ],
+            [
+                "Endpoint of ambition",
+                "goal"
+            ],
+            [
+                "Done after receiving a favor",
+                "thank"
+            ],
+            [
+                "Weapons",
+                "arms"
+            ]
+        ],
+        "right": [
+            [
+                "Calendar page count",
+                "dozen"
+            ],
+            [
+                "Plain honest hot dog?",
+                "frank"
+            ],
+            [
+                "Places to find crops",
+                "farms"
+            ],
+            [
+                "Found in a weak plot",
+                "hole"
             ]
         ],
         "match_order": [
