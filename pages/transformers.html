@@ -337,7 +337,7 @@
         let validWords = new Set();
 
         Promise.all([
-            fetch('/static/all-words.json').then(response => response.json()),
+            fetch('/static/all-words-8-letter-max.json').then(response => response.json()),
             fetch('/static/transformer-games.json').then(response => response.json())
         ]).then(([validWordsData, gamesData]) => {
             validWords = new Set(validWordsData.map(word => word.toLowerCase()));

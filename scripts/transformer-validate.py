@@ -3,7 +3,7 @@ from pathlib import Path
 
 # Load the valid words set
 script_dir = Path(__file__).parent
-with open(script_dir.parent / "static" / "all-words.json", 'r') as f:
+with open(script_dir.parent / "static" / "all-words-8-letter-max.json", 'r') as f:
     common_words = set(json.load(f))
 
 def find_removals(word):

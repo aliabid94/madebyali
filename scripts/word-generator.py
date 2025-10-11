@@ -93,12 +93,16 @@ def main():
     all_words = sorted(list(all_words_set))
     print(f"Generated {len(all_words)} total words")
 
+    all_words_8_max = [word for word in all_words if len(word) <= 8]
+    print(f"Generated {len(all_words_8_max)} words (8 letters max)")
+
     # Write to files
     static_dir = Path(__file__).parent.parent / "static"
     static_dir.mkdir(exist_ok=True)
 
     common_path = static_dir / "common-words.json"
     all_path = static_dir / "all-words.json"
+    all_8_max_path = static_dir / "all-words-8-letter-max.json"
 
     print(f"Writing to {common_path}...")
     with open(common_path, 'w') as f:
@@ -108,9 +112,14 @@ def main():
     with open(all_path, 'w') as f:
         json.dump(all_words, f, indent=2)
 
+    print(f"Writing to {all_8_max_path}...")
+    with open(all_8_max_path, 'w') as f:
+        json.dump(all_words_8_max, f, indent=2)
+
     print("Done!")
     print(f"  - common-words.json: {len(common_words)} words")
     print(f"  - all-words.json: {len(all_words)} words")
+    print(f"  - all-words-8-letter-max.json: {len(all_words_8_max)} words")
 
 
 if __name__ == "__main__":
