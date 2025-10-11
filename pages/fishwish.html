@@ -404,21 +404,27 @@
             for (let i = 0; i < game.left.length; i++) {
                 const leftCard = cardsContainer.children[i * 2];
                 const leftClue = leftCard.querySelector('.clue');
+                const leftAnswerDiv = leftCard.querySelector('.answer');
 
                 const leftAnswer = game.left[i][1];
                 const rightIndex = game.match_order[i];
                 const rightCard = cardsContainer.children[rightIndex * 2 + 1];
                 const rightClue = rightCard.querySelector('.clue');
+                const rightAnswerDiv = rightCard.querySelector('.answer');
 
                 const rightAnswer = game.right[rightIndex][1];
 
                 if ((gameState.hintsUsed || []).includes(i) && !gameState.solvedClues.includes(i)) {
-                    const leftBaseText = game.left[i][0];
-                    const rightBaseText = game.right[rightIndex][0];
+                    // Show redacted answers (first letter + underscores)
+                    const leftRedacted = leftAnswer[0] + ' _'.repeat(leftAnswer.length - 1);
+                    const rightRedacted = rightAnswer[0] + ' _'.repeat(rightAnswer.length - 1);
+                    leftCard.classList.add('hint');
+                    rightCard.classList.add('hint');
+
                     leftClue.classList.add("win-flash");
                     rightClue.classList.add("win-flash");
-                    leftClue.innerHTML = `<strong>${leftBaseText} (${leftAnswer.length} letters)</strong>`;
-                    rightClue.innerHTML = `<strong>${rightBaseText} (${rightAnswer.length} letters)</strong>`;
+                    leftAnswerDiv.textContent = leftRedacted;
+                    rightAnswerDiv.textContent = rightRedacted;
                 }
             }
 
@@ -509,6 +515,10 @@
                 const from = document.querySelector(`#cards .card:nth-child(${left * 2 + 1})`);
                 const to = document.querySelector(`#cards .card:nth-child(${right * 2 + 2})`);
 
+                const fromWord = game.left[left][1];
+                const toWord = game.right[right][1];
+
+
                 const fromRect = from.getBoundingClientRect();
                 const toRect = to.getBoundingClientRect();
 
@@ -566,8 +576,10 @@
                 svg.appendChild(line);
                 bg_color.split(' ').forEach(cls => from.classList.add(cls));
                 from.classList.add('solved');
+                from.querySelector('.answer').textContent = fromWord;
                 bg_color.split(' ').forEach(cls => to.classList.add(cls));
                 to.classList.add('solved');
+                to.querySelector('.answer').textContent = toWord;
                 document.body.appendChild(svg);
 
                 if (fadeIn) {

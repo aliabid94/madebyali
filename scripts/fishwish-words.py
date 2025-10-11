@@ -26,7 +26,7 @@ if words_file.exists():
 with open(script_dir.parent / "static" / "common-words.json", 'r') as f:
     all_common_words = json.load(f)
 
-# Filter to words with pronunciations and limit to 3000
+# Filter to words with pronunciations and limit to 10000
 common_words = []
 for word in all_common_words:
     if len(word) < 3:
@@ -34,7 +34,7 @@ for word in all_common_words:
     if not pronouncing.phones_for_word(word):
         continue
     common_words.append(word)
-    if len(common_words) >= 3000:
+    if len(common_words) >= 10000:
         break
 
 def get_rhyming_phoneme(word):
@@ -66,6 +66,18 @@ for i in range(SET_COUNT):
             continue
         words = rhyme_dict[phoneme]
         selected_words = random.sample(words, 2)
+        if all(word.endswith('s') for word in selected_words) and all(word[:-1] in all_common_words for word in selected_words):
+            continue
+        if all(word.endswith('d') for word in selected_words) and all(word[:-1] in all_common_words for word in selected_words):
+            continue
+        if all(word.endswith('ed') for word in selected_words) and all(word[:-2] in all_common_words for word in selected_words):
+            continue
+        if all(word.endswith('ly') for word in selected_words) and all(word[:-2] in all_common_words for word in selected_words):
+            continue
+        if all(word.endswith('er') for word in selected_words) and all(word[:-2] in all_common_words for word in selected_words):
+            continue
+        if all(word.endswith('ing') for word in selected_words) and all(word[:-3] in all_common_words for word in selected_words):
+            continue
         if any(word in existing_words for word in selected_words):
             continue
         print(selected_words)

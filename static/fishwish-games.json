@@ -2,20 +2,20 @@
     {
         "left": [
             [
-                "First letter written by hand?",
-                "initial"
-            ],
-            [
                 "Half-baked idea",
                 "notion"
             ],
             [
-                "Impulse hard to resist",
-                "urge"
-            ],
-            [
                 "These 'makers' will make your heart pump",
                 "pace"
+            ],
+            [
+                "First letter written by hand?",
+                "initial"
+            ],
+            [
+                "Impulse hard to resist",
+                "urge"
             ]
         ],
         "right": [
@@ -37,29 +37,29 @@
             ]
         ],
         "match_order": [
-            0,
             2,
-            3,
-            1
+            1,
+            0,
+            3
         ]
     },
     {
         "left": [
             [
-                "A plea, or stylish charm",
-                "appeal"
+                "What you do at the ETA",
+                "arrive"
             ],
             [
-                "Six-legged critter",
-                "insect"
+                "A plea, or stylish charm",
+                "appeal"
             ],
             [
                 "Fence-sharer across the yard",
                 "neighbor"
             ],
             [
-                "What you do at the ETA",
-                "arrive"
+                "Six-legged critter",
+                "insect"
             ]
         ],
         "right": [
@@ -81,29 +81,29 @@
             ]
         ],
         "match_order": [
+            2,
             0,
-            3,
             1,
-            2
+            3
         ]
     },
     {
         "left": [
             [
-                "Absent of light",
-                "dark"
-            ],
-            [
                 "Formal protest at a courtroom",
                 "objection"
             ],
             [
-                "Done from the pulpit",
-                "preach"
-            ],
-            [
                 "Waxing crescent, for example",
                 "phase"
+            ],
+            [
+                "Absent of light",
+                "dark"
+            ],
+            [
+                "Done from the pulpit",
+                "preach"
             ]
         ],
         "right": [
@@ -125,14 +125,22 @@
             ]
         ],
         "match_order": [
-            3,
             1,
-            0,
-            2
+            2,
+            3,
+            0
         ]
     },
     {
         "left": [
+            [
+                "Shaper of youthful minds",
+                "teacher"
+            ],
+            [
+                "Overflowing, with nothing lacking",
+                "full"
+            ],
             [
                 "Line you might find in a stanza",
                 "verse"
@@ -140,14 +148,6 @@
             [
                 "Arrange notes into harmony",
                 "compose"
-            ],
-            [
-                "Overflowing, with nothing lacking",
-                "full"
-            ],
-            [
-                "Shaper of youthful minds",
-                "teacher"
             ]
         ],
         "right": [
@@ -169,29 +169,29 @@
             ]
         ],
         "match_order": [
-            0,
-            2,
+            1,
             3,
-            1
+            0,
+            2
         ]
     },
     {
         "left": [
             [
-                "A place for shooting",
-                "range"
-            ],
-            [
-                "Used for boiling pasta",
-                "pot"
-            ],
-            [
                 "A daily meal",
                 "dinner"
             ],
             [
+                "A place for shooting",
+                "range"
+            ],
+            [
                 "Posting sought by applicants",
                 "job"
+            ],
+            [
+                "Used for boiling pasta",
+                "pot"
             ]
         ],
         "right": [
@@ -213,18 +213,14 @@
             ]
         ],
         "match_order": [
-            2,
-            3,
             0,
-            1
+            2,
+            1,
+            3
         ]
     },
     {
         "left": [
-            [
-                "An evening meal",
-                "supper"
-            ],
             [
                 "Money matters, literally",
                 "finance"
@@ -232,6 +228,10 @@
             [
                 "Lesson hidden in story\u2019s ending",
                 "moral"
+            ],
+            [
+                "An evening meal",
+                "supper"
             ],
             [
                 "Snows fate in spring",
@@ -257,18 +257,14 @@
             ]
         ],
         "match_order": [
-            2,
             3,
             0,
+            2,
             1
         ]
     },
     {
         "left": [
-            [
-                "Sculpture offering comfort?",
-                "relief"
-            ],
             [
                 "Pull to unravel",
                 "thread"
@@ -280,6 +276,10 @@
             [
                 "Last letter repeated",
                 "sleep"
+            ],
+            [
+                "Sculpture offering comfort?",
+                "relief"
             ]
         ],
         "right": [
@@ -301,14 +301,18 @@
             ]
         ],
         "match_order": [
-            3,
             2,
             1,
-            0
+            0,
+            3
         ]
     },
     {
         "left": [
+            [
+                "Military rank",
+                "colonel"
+            ],
             [
                 "Unconscious vision",
                 "dream"
@@ -320,10 +324,6 @@
             [
                 "Can be small, trash, or pillow",
                 "talk"
-            ],
-            [
-                "Military rank",
-                "colonel"
             ]
         ],
         "right": [
@@ -345,21 +345,21 @@
             ]
         ],
         "match_order": [
+            0,
             3,
             1,
-            2,
-            0
+            2
         ]
     },
     {
         "left": [
             [
-                "Stadium fan activity",
-                "wave"
-            ],
-            [
                 "Work out this clue",
                 "exercise"
+            ],
+            [
+                "Stadium fan activity",
+                "wave"
             ],
             [
                 "Jot it down",
@@ -389,8 +389,8 @@
             ]
         ],
         "match_order": [
-            2,
             1,
+            2,
             3,
             0
         ]
@@ -398,20 +398,20 @@
     {
         "left": [
             [
-                "Strike limit",
-                "three"
-            ],
-            [
                 "Rollercoaster requirement",
                 "height"
             ],
             [
-                "Keeps watch",
-                "guard"
+                "Strike limit",
+                "three"
             ],
             [
                 "Keep jam for later?",
                 "preserve"
+            ],
+            [
+                "Keeps watch",
+                "guard"
             ]
         ],
         "right": [
@@ -433,10 +433,10 @@
             ]
         ],
         "match_order": [
-            3,
             0,
-            2,
-            1
+            3,
+            1,
+            2
         ]
     },
     {
@@ -450,12 +450,12 @@
                 "goal"
             ],
             [
-                "Done after receiving a favor",
-                "thank"
-            ],
-            [
                 "Weapons",
                 "arms"
+            ],
+            [
+                "Done after receiving a favor",
+                "thank"
             ]
         ],
         "right": [
@@ -479,7 +479,403 @@
         "match_order": [
             0,
             3,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Where the ground is relative to you",
+                "below"
+            ],
+            [
+                "Possible forecast",
+                "sunny"
+            ],
+            [
+                "Summoned with a gesture",
+                "beckoned"
+            ],
+            [
+                "Consistent apparel",
+                "uniform"
+            ]
+        ],
+        "right": [
+            [
+                "Where one might take a stand",
+                "platform"
+            ],
+            [
+                "Not the first time measurement?",
+                "second"
+            ],
+            [
+                "Not a con",
+                "pro"
+            ],
+            [
+                "Dollars and cents",
+                "money"
+            ]
+        ],
+        "match_order": [
+            2,
+            3,
             1,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Mentor flying cheap?",
+                "coach"
+            ],
+            [
+                "Event worth dressing up for",
+                "occasion"
+            ],
+            [
+                "Clearly seen",
+                "apparent"
+            ],
+            [
+                "Outlive a catastrophe",
+                "survive"
+            ]
+        ],
+        "right": [
+            [
+                "One who might ground you",
+                "parent"
+            ],
+            [
+                "From the largest continent",
+                "asian"
+            ],
+            [
+                "State between birth and death",
+                "alive"
+            ],
+            [
+                "Draw near",
+                "approach"
+            ]
+        ],
+        "match_order": [
+            3,
+            1,
+            0,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "Marched under",
+                "banner"
+            ],
+            [
+                "Peak location",
+                "mountain"
+            ],
+            [
+                "Scientist's speculations",
+                "theories"
+            ],
+            [
+                "Crafty plan",
+                "scheme"
+            ]
+        ],
+        "right": [
+            [
+                "Style in which one behaves",
+                "manner"
+            ],
+            [
+                "Light ray or smile",
+                "beam"
+            ],
+            [
+                "Successive installments on screen or shelf",
+                "series"
+            ],
+            [
+                "Public work that makes a splash",
+                "fountain"
+            ]
+        ],
+        "match_order": [
+            0,
+            3,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Arrange in a pile",
+                "stack"
+            ],
+            [
+                "Sterile salt mix",
+                "saline"
+            ],
+            [
+                "Reach out",
+                "contact"
+            ],
+            [
+                "Boiling with rage",
+                "furious"
+            ]
+        ],
+        "right": [
+            [
+                "Inquisitive or just nosy",
+                "curious"
+            ],
+            [
+                "Shorten deal terms?",
+                "contract"
+            ],
+            [
+                "Minutes in a quarter hour",
+                "fifteen"
+            ],
+            [
+                "Shelf unit",
+                "rack"
+            ]
+        ],
+        "match_order": [
+            3,
+            2,
+            1,
+            0
+        ]
+    },
+    {
+        "left": [
+            [
+                "Following in sequence",
+                "next"
+            ],
+            [
+                "Tops off the house",
+                "roof"
+            ],
+            [
+                "Mechanical kidney",
+                "dialysis"
+            ],
+            [
+                "Compass direction",
+                "south"
+            ]
+        ],
+        "right": [
+            [
+                "Mathematical argument",
+                "proof"
+            ],
+            [
+                "Quick message",
+                "text"
+            ],
+            [
+                "Dissection of data",
+                "analysis"
+            ],
+            [
+                "Part of a river or face",
+                "mouth"
+            ]
+        ],
+        "match_order": [
+            1,
+            0,
+            2,
+            3
+        ]
+    },
+    {
+        "left": [
+            [
+                "Done before a big test",
+                "study"
+            ],
+            [
+                "Inventive type",
+                "creative"
+            ],
+            [
+                "Deserve payment for one's effort",
+                "earn"
+            ],
+            [
+                "Extra feature or math symbol",
+                "plus"
+            ]
+        ],
+        "right": [
+            [
+                "Born and bred locally",
+                "native"
+            ],
+            [
+                "Large vehicle",
+                "bus"
+            ],
+            [
+                "Give or head back",
+                "return"
+            ],
+            [
+                "Violent",
+                "bloody"
+            ]
+        ],
+        "match_order": [
+            3,
+            0,
+            2,
+            1
+        ]
+    },
+    {
+        "left": [
+            [
+                "Gain success",
+                "achieve"
+            ],
+            [
+                "Market dive",
+                "crash"
+            ],
+            [
+                "Complain softly",
+                "grumble"
+            ],
+            [
+                "Language, or taster",
+                "tongue"
+            ]
+        ],
+        "right": [
+            [
+                "Monk's demeanor",
+                "humble"
+            ],
+            [
+                "Found in wallets",
+                "cash"
+            ],
+            [
+                "Organ that is one of a pair",
+                "lung"
+            ],
+            [
+                "Innocent at heart",
+                "naive"
+            ]
+        ],
+        "match_order": [
+            3,
+            1,
+            0,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "Unwanted growth",
+                "tumor"
+            ],
+            [
+                "Hybrid material built from many parts",
+                "composite"
+            ],
+            [
+                "Piece of journalism",
+                "article"
+            ],
+            [
+                "Lively planet",
+                "earth"
+            ]
+        ],
+        "right": [
+            [
+                "Small room that's hard to come out of",
+                "closet"
+            ],
+            [
+                "Comedian's craft",
+                "humor"
+            ],
+            [
+                "Actual value",
+                "worth"
+            ],
+            [
+                "Tiny bit",
+                "particle"
+            ]
+        ],
+        "match_order": [
+            1,
+            0,
+            3,
+            2
+        ]
+    },
+    {
+        "left": [
+            [
+                "US political party",
+                "democrat"
+            ],
+            [
+                "Not one for jokes",
+                "serious"
+            ],
+            [
+                "Found in rush hour",
+                "traffic"
+            ],
+            [
+                "Beat (cream, eggs, etc.)",
+                "whip"
+            ]
+        ],
+        "right": [
+            [
+                "Population breakdown",
+                "demographic"
+            ],
+            [
+                "Way in which something is arranged",
+                "format"
+            ],
+            [
+                "Hold on tight",
+                "grip"
+            ],
+            [
+                "Veiled in intrigue",
+                "mysterious"
+            ]
+        ],
+        "match_order": [
+            1,
+            3,
+            0,
             2
         ]
     }

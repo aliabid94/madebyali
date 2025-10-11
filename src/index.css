@@ -71,7 +71,7 @@ nav {
         &:not(.solved) {
             @apply bg-gray-100 dark:bg-gray-800;
 
-            .answer {
+            &:not(.hint) .answer {
                 @apply hidden;
             }
         }
@@ -80,7 +80,6 @@ nav {
             @apply text-white;
         }
 
-        .clue {}
 
         .answer {
             @apply mt-2 font-semibold;
