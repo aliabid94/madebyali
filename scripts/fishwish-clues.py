@@ -52,7 +52,7 @@ for i, word_set in enumerate(word_sets):
         clue_set.append(clues)
     clue_sets.append(clue_set)
 
-with open('fishwish-clues.json', 'w') as f:
-    json.dump(clue_sets, f, indent=2)
+    with open('fishwish-clues.json', 'w') as f:
+        json.dump(clue_sets, f, indent=2)
 
 print(f"Successfully generated clues for {len(clue_sets)} sets")
