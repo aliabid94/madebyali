@@ -59,6 +59,7 @@
                 </ul>
 
                 <p class="mb-3">Circles next to a word indicate if it is a valid word, and between words indicate if the transformation is valid. Green means valid, and red means invalid.</p>
+                <p class="mb-3"><strong>Important:</strong> You cannot use the same word more than once in your chain.</p>
                 <p class="mb-3">When all the circles are green, you win!</p>
             </div>
 
@@ -514,11 +515,24 @@
 
             const wordStr = word.join('').toLowerCase();
 
-            if (validWords.has(wordStr)) {
-                return 'valid';
-            } else {
+            // Check if word is valid in dictionary
+            if (!validWords.has(wordStr)) {
                 return 'invalid';
             }
+
+            // Check if word is used more than once
+            let occurrences = 0;
+            for (let i = 0; i < currentWords.length; i++) {
+                if (!currentWords[i].includes('') && currentWords[i].join('').toLowerCase() === wordStr) {
+                    occurrences++;
+                }
+            }
+
+            if (occurrences > 1) {
+                return 'invalid';
+            }
+
+            return 'valid';
         }
 
         function validateTransformation(word1, word2) {

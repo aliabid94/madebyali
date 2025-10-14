@@ -92,10 +92,10 @@ def explore_word(word, max_depth=7, break_on_first=False):
 
             if break_on_first:
                 if depth > 5 and (ty['-'] + ty['+'] > 1):
-                    print(json.dumps(history + [t]), ty)
+                    print(json.dumps(history + [t]), ty) if len(t) >= 6 and ty['a'] else None
                     return
             else:
-                print(json.dumps(history + [t]), ty)
+                print(json.dumps(history + [t]), ty) if len(t) >= 6 and ty['a'] else None
 
             visited.add(t)
             queue.append((t, history + [t], ty))

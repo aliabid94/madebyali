@@ -17,7 +17,11 @@
     ["banner", "banter", "batter", "fatter", "father", "feather", "weather"],
     ["sweet", "sweat", "waste", "wasted", "lasted", "listed", "delist"],
     ["create", "crate", "crater", "rater", "rather", "lather", "later", "alter"],
-    ["kill", "kills",  "skill", "still", "stall", "shall", "halls", "hails"],
+    ["kill", "kills",  "skill", "still", "till", "tilt", "wilt", "wild"],
+    ["medal", "meal", "metal", "petal", "petals", "pastel", "paste", "waste"],
+    ["chimp", "chip", "chic", "chick", "thick", "think", "thing", "night"],
+    ["awaken", "awake", "aware", "award", "ward", "word", "words", "sword"],
+    ["reform", "former", "formed", "forced", "force", "forces", "fresco"],
     ["tore", "store", "stored", "stowed", "towed", "towel", "vowel"],
     ["clock", "click", "slick", "sick", "sink", "stink", "knits", "knots"],
     ["dice", "die", "pie", "pier", "ripe", "ripen", "risen", "siren"],
@@ -26,4 +30,3 @@
     ["clover", "clove", "glove", "grove", "grave", "gravy", "gray"],
     ["dome", "mode", "mole", "sole", "lose", "close", "closet", "closest"]
 ]
- 
