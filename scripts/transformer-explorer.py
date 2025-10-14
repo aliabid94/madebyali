@@ -77,7 +77,7 @@ def explore_word(word, max_depth=7, break_on_first=False):
         transforms = removals + insertions + replacements + anagrams
         random.shuffle(transforms)
         transforms = set(transforms)
-        transforms = [w for w in transforms if w not in visited]
+        transforms = [w for w in transforms if w not in visited and len(w) > 3]
 
         for t in transforms:
             ty = dict(types)
