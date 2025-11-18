@@ -4,12 +4,12 @@
 <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-WM5YFXBNP2"></script>
     <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
 
-    gtag('config', 'G-WM5YFXBNP2');
-    </script>    
+        gtag('config', 'G-WM5YFXBNP2');
+    </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Transformers - madebyali</title>
@@ -47,20 +47,139 @@
 
             <div id="instructionsContent">
                 <h2 class="text-lg mb-4">how to play transformers</h2>
-                <p class="mb-3">You'll create a chain of words, given the first and last words of the chain. Fill in the middle words with valid transformations between them.</p>
+                <p class="mb-3">You must create a chain of words that connect the given start and end words. Each word
+                    in the chain must be connected to the word before through any of the 4 valid transformations listed
+                    below.</p>
+                <p>The example connects "CAT" to "EAR" with each of the 4 types of valid transformations.</p>
 
+                <!-- Example chain visualization -->
+                <div class="text-center">
+                    <div class="my-4 flex-col inline-flex">
+                        <!-- CAT -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 flex-1 pl-4">
+                                <div class="flex justify-center gap-1">
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        C</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        A</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        T</div>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <!-- Transformation circle -->
+                        <div class="flex my-1">
+                            <div class="flex-1 pl-[54px]">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <!-- CART -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2">
+                                <div class="flex justify-center gap-1">
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        C</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        A</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        R</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        T</div>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">1. Add a letter <strong>(T)</strong>
+                            </div>
+                        </div>
+                        <!-- Transformation circle -->
+                        <div class="flex my-1">
+                            <div class="flex-1 pl-[54px]">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <!-- ART -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 pl-4">
+                                <div class="flex justify-center gap-1">
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        A</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        R</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        T</div>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">2. Remove a letter
+                                <strong>(C)</strong></div>
+                        </div>
+                        <!-- Transformation circle -->
+                        <div class="flex my-1">
+                            <div class="flex-1 pl-[54px]">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <!-- ARE -->
+                        <div class="flex items-center gap-2">
+                            <div class="flex items-center gap-2 pl-4">
+                                <div class="flex justify-center gap-1">
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        A</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        R</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase">
+                                        E</div>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">3. Swap a letter <strong>(T to
+                                    E)</strong></div>
+                        </div>
+                        <!-- Transformation circle -->
+                        <div class="flex my-1">
+                            <div class="flex-1 pl-[54px]">
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                        </div>
+                        <!-- EAR -->
+                        <div class="flex items-center gap-2 mb-2">
+                            <div class="flex items-center gap-2 pl-4">
+                                <div class="flex justify-center gap-1">
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        E</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        A</div>
+                                    <div
+                                        class="w-6 h-6 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-sm font-semibold uppercase bg-gray-100 dark:bg-gray-700">
+                                        R</div>
+                                </div>
+                                <div class="w-2 h-2 rounded-full bg-green-500"></div>
+                            </div>
+                            <div class="text-xs text-gray-600 dark:text-gray-400">4. Rearrange letters</div>
+                        </div>
+                    </div>
+                </div>
 
-                <p class="mb-3"><strong>Valid transformations:</strong></p>
-                <ul class="list-disc list-inside mb-3">
-                    <li>Insert a letter: CAT → CART</li>
-                    <li>Remove a letter: CART → ART</li>
-                    <li>Swap a letter: ART → ARE</li>
-                    <li>Rearrange letters: ARE → EAR</li>
-                </ul>
-
-                <p class="mb-3">Circles next to a word indicate if it is a valid word, and between words indicate if the transformation is valid. Green means valid, and red means invalid.</p>
-                <p class="mb-3"><strong>Important:</strong> You cannot use the same word more than once in your chain.</p>
-                <p class="mb-3">When all the circles are green, you win!</p>
+                <p class="mb-3">A green circle next to a word means it is a valid dictionary word. A green circle
+                    between words means it is a valid transformation. A green circle does not necessarily mean the word
+                    is part of the correct chain. You cannot reuse a word in the chain.</p>
             </div>
 
             <div id="completionContent" class="hidden">
@@ -68,7 +187,8 @@
                 <p>Time: <span class="font-semibold" id="completionTime"></span></p>
                 <p>Streak: <span class="font-semibold" id="completionStreak"></span></p>
                 <p>"No Hint" Streak: <span class="font-semibold" id="completionNoHintStreak"></span></p>
-                <button id="shareBtn" class="mt-1 mb-6 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium w-full">Share</button>
+                <button id="shareBtn"
+                    class="mt-1 mb-6 bg-pink-500 hover:bg-pink-600 text-white px-4 py-2 rounded-lg font-medium w-full">Share</button>
                 <div>
                     <p class="mb-3">Another puzzle you may like!</p>
                     <a href="/fishwish" class="link-card block no-underline">
@@ -84,7 +204,9 @@
     <div
         class="keyboard sticky bottom-0 left-0 right-0 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700 p-4 bg-opacity-50 dark:bg-opacity-50 z-20">
         <div class="absolute bottom-full left-0 flex w-full justify-center">
-            <button id="hintButton" class="rounded-t border border-b-0 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-1 hidden">Get Hint</button>
+            <button id="hintButton"
+                class="rounded-t border border-b-0 border-gray-300 dark:border-gray-500 bg-white dark:bg-gray-700 text-gray-800 dark:text-gray-200 px-4 py-1 hidden">Get
+                Hint</button>
         </div>
         <div class="max-w-xl mx-auto">
             <div class="grid grid-cols-10 gap-1 sm:gap-2 mb-2">
@@ -153,6 +275,9 @@
         if (gameState) {
             gameState = JSON.parse(gameState);
             elapsedTime = gameState.elapsedTime || 0;
+            // Initialize new fields for backward compatibility
+            if (!gameState.revealedHints) gameState.revealedHints = [];
+            if (gameState.hintsUsed === undefined) gameState.hintsUsed = 0;
         } else {
             elapsedTime = 0;
             gameState = {
@@ -160,6 +285,8 @@
                 complete: false,
                 currentWords: [],
                 usedHint: false,
+                revealedHints: [], // Array of {wordIndex, letterIndex}
+                hintsUsed: 0,
             };
         }
         let visitedState = localStorage.getItem(visitedKey);
@@ -260,7 +387,7 @@
             modalContent.classList.add('modal-pop-in');
         }
 
-        document.getElementById('shareBtn').addEventListener('click', function() {
+        document.getElementById('shareBtn').addEventListener('click', function () {
             const btn = this;
             const originalText = btn.textContent;
             const minutes = Math.floor(gameState.elapsedTime / 60);
@@ -383,13 +510,24 @@
                     letterBox.className = 'w-10 h-10 border-2 border-gray-300 dark:border-gray-500 rounded flex items-center justify-center text-lg font-semibold uppercase';
 
                     const isFirstOrLast = i === 0 || i === currentWords.length - 1;
-                    if (isFirstOrLast) {
+                    // Check if this letter is a revealed hint
+                    const isRevealedHint = gameState.revealedHints && gameState.revealedHints.some(
+                        hint => hint.wordIndex === i && hint.letterIndex === j
+                    );
+
+                    if (isFirstOrLast || isRevealedHint) {
                         letterBox.classList.add('bg-gray-100', 'dark:bg-gray-700');
                     } else {
                         letterBox.classList.add('cursor-pointer', 'hover:bg-gray-50', 'dark:hover:bg-gray-800');
                         letterBox.dataset.wordIndex = i;
                         letterBox.dataset.letterIndex = j;
                         letterBox.addEventListener('click', handleLetterClick);
+                    }
+
+                    // Always add data attributes for the flash animation to find the element
+                    if (!isFirstOrLast) {
+                        letterBox.dataset.wordIndex = i;
+                        letterBox.dataset.letterIndex = j;
                     }
 
                     letterBox.textContent = currentWords[i][j];
@@ -451,62 +589,17 @@
                 return;
             }
 
-            // Check if first editable word (index 1) is complete
-            const firstEditableWord = currentWords[1];
-            const isFirstWordComplete = !firstEditableWord.includes('');
+            // Calculate number of intermediate words
+            const numIntermediateWords = game ? game.length - 2 : 0;
 
-            if (isFirstWordComplete) {
+            // Show hint button if hints are still available
+            if (gameState.hintsUsed < numIntermediateWords) {
                 hintButton.classList.remove('hidden');
             } else {
                 hintButton.classList.add('hidden');
             }
         }
 
-        function showTemporaryPopup(message) {
-            // Create popup element
-            const popup = document.createElement('div');
-            popup.className = 'fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 bg-white dark:bg-gray-800 text-gray-900 dark:text-gray-100 px-6 py-4 rounded-lg shadow-lg z-50 text-center';
-            popup.textContent = message;
-            document.body.appendChild(popup);
-
-            // Remove after 2 seconds
-            setTimeout(() => {
-                popup.remove();
-            }, 2000);
-        }
-
-        function validateUserProgress() {
-            // Loop through user-entered words (skip first word which is given)
-            for (let i = 1; i < currentWords.length - 1; i++) {
-                const word = currentWords[i];
-
-                // Check if word is incomplete
-                if (word.includes('')) {
-                    // This is the first incomplete word
-                    if (i === 1) {
-                        showTemporaryPopup('Complete the first word to get started');
-                    } else {
-                        const lastCompletedWord = currentWords[i - 1].join('').toUpperCase();
-                        showTemporaryPopup(`All words through ${lastCompletedWord} are correct!`);
-                    }
-                    return;
-                }
-
-                // Check if word matches the correct answer from game array
-                const userWord = word.join('').toLowerCase();
-                const correctWord = game[i].toLowerCase();
-
-                if (userWord !== correctWord) {
-                    const invalidWord = word.join('').toUpperCase();
-                    showTemporaryPopup(`Word ${invalidWord} is incorrect`);
-                    return;
-                }
-            }
-
-            // If we get here, all user words are correct
-            const lastUserWord = currentWords[currentWords.length - 2].join('').toUpperCase();
-            showTemporaryPopup(`Everything up to ${lastUserWord} is correct`);
-        }
 
         function validateWord(word) {
             if (word.includes('')) {
@@ -592,6 +685,13 @@
             const wordIndex = parseInt(e.target.dataset.wordIndex);
             const letterIndex = parseInt(e.target.dataset.letterIndex);
 
+            // Don't allow clicking on revealed hint letters
+            const isRevealedHint = gameState.revealedHints && gameState.revealedHints.some(
+                hint => hint.wordIndex === wordIndex && hint.letterIndex === letterIndex
+            );
+
+            if (isRevealedHint) return;
+
             selectedLetterIndex = { word: wordIndex, letter: letterIndex };
             renderGame();
         }
@@ -619,6 +719,21 @@
             if (!selectedLetterIndex || gameState.complete) return;
 
             const { word, letter } = selectedLetterIndex;
+
+            // Check if this letter is a revealed hint - if so, don't allow editing
+            const isRevealedHint = gameState.revealedHints && gameState.revealedHints.some(
+                hint => hint.wordIndex === word && hint.letterIndex === letter
+            );
+
+            if (isRevealedHint) {
+                // Move to next non-hint letter instead
+                if (key === 'backspace') {
+                    moveSelection('left');
+                } else if (/^[a-z]$/.test(key)) {
+                    moveSelection('right');
+                }
+                return;
+            }
 
             if (key === 'backspace') {
                 currentWords[word][letter] = '';
@@ -766,15 +881,95 @@
             }
         });
 
+        // Helper function to get hint word order (center-outward alternation)
+        function getHintWordOrder(numIntermediateWords) {
+            const order = [];
+            const middleIndex = 1 + Math.floor((numIntermediateWords - 1) / 2);
+
+            order.push(middleIndex);
+
+            let left = middleIndex - 1;
+            let right = middleIndex + 1;
+            const maxIndex = numIntermediateWords;
+
+            while (left >= 1 || right <= maxIndex) {
+                if (left >= 1) {
+                    order.push(left);
+                    left--;
+                }
+                if (right <= maxIndex) {
+                    order.push(right);
+                    right++;
+                }
+            }
+
+            return order;
+        }
+
+        // Helper function to find which letter to reveal in a word
+        function getHintLetterIndex(wordIndex) {
+            const currentWord = game[wordIndex].toLowerCase();
+            const previousWord = game[wordIndex - 1].toLowerCase();
+
+            // Find first letter that differs from previous word at same position
+            for (let i = 0; i < currentWord.length; i++) {
+                if (i >= previousWord.length || currentWord[i] !== previousWord[i]) {
+                    return i;
+                }
+            }
+
+            // If no difference found, return middle letter
+            return Math.floor(currentWord.length / 2);
+        }
+
+        // Reveal a hint letter
+        function revealHintLetter() {
+            const numIntermediateWords = game.length - 2;
+
+            // Check if all hints have been used
+            if (gameState.hintsUsed >= numIntermediateWords) {
+                return;
+            }
+
+            // Get the order of words to reveal hints
+            const hintOrder = getHintWordOrder(numIntermediateWords);
+            const wordIndex = hintOrder[gameState.hintsUsed];
+            const letterIndex = getHintLetterIndex(wordIndex);
+
+            // Store the revealed hint
+            gameState.revealedHints.push({ wordIndex, letterIndex });
+            gameState.hintsUsed++;
+            setGameState('revealedHints', gameState.revealedHints);
+            setGameState('hintsUsed', gameState.hintsUsed);
+
+            // Set the letter in currentWords
+            const correctLetter = game[wordIndex][letterIndex].toLowerCase();
+            currentWords[wordIndex][letterIndex] = correctLetter;
+            setGameState('currentWords', currentWords);
+
+            // Re-render the game
+            renderGame();
+
+            // Apply flash animation to the revealed letter
+            const letterBoxes = document.querySelectorAll(`[data-word-index="${wordIndex}"][data-letter-index="${letterIndex}"]`);
+            if (letterBoxes.length > 0) {
+                letterBoxes[0].classList.add('win-flash');
+                // Remove animation class after animation completes
+                setTimeout(() => {
+                    letterBoxes[0].classList.remove('win-flash');
+                }, 500);
+            }
+        }
+
         // Hint button event listener
-        document.getElementById('hintButton').addEventListener('click', function() {
+        document.getElementById('hintButton').addEventListener('click', function () {
             if (gameState.complete) return;
 
             // Mark that hint was used
             setGameState('usedHint', true);
 
-            // Validate user progress
-            validateUserProgress();
+            // Reveal a hint letter
+            revealHintLetter();
         });
     </script>
 </body>
