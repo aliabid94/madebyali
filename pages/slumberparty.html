@@ -139,7 +139,7 @@
             <div class="playing-card" id="playing-card">
                 <div class="card-front">
                     <div class="card-front-pattern"></div>
-                    <div class="card-front-label">SP</div>
+                    <div class="card-front-label"></div>
                 </div>
                 <div class="card-back">
                     <div class="card-header" id="card-header"></div>
@@ -409,7 +409,7 @@
         // --- Polling ---
         function startPolling() {
             poll();
-            pollInterval = setInterval(poll, 2000);
+            pollInterval = setInterval(poll, 1000);
         }
 
         function stopPolling() {
