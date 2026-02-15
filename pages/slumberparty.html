@@ -158,8 +158,8 @@
     <script>
         // --- State from URL ---
         const params = new URLSearchParams(window.location.search);
-        const roomId = params.get('id');
-        const userName = params.get('user');
+        let roomId = params.get('id');
+        let userName = params.get('user');
         const isRoomPage = window.location.pathname === '/slumberparty/room';
 
         let pollInterval = null;
@@ -309,7 +309,15 @@
                     setButtonsLoading(false);
                     return;
                 }
-                window.location.href = `/slumberparty/room?id=${data.room_id}&user=${encodeURIComponent(name)}`;
+                // Transition in-place instead of redirecting (mobile blocks post-await redirects)
+                roomId = String(data.room_id);
+                userName = name;
+                isCreator = true;
+                history.pushState(null, '', `/slumberparty/room?id=${data.room_id}&user=${encodeURIComponent(name)}`);
+                setButtonsLoading(false);
+                showLobbyView();
+                document.getElementById('start-game-btn').addEventListener('click', startGame);
+                startPolling();
             } catch (e) {
                 showJoinError('Network error. Please try again.');
                 setButtonsLoading(false);
@@ -337,7 +345,26 @@
                     setButtonsLoading(false);
                     return;
                 }
-                window.location.href = `/slumberparty/room?id=${parseInt(code)}&user=${encodeURIComponent(name)}`;
+                // Transition in-place instead of redirecting (mobile blocks post-await redirects)
+                roomId = String(parseInt(code));
+                userName = name;
+                history.pushState(null, '', `/slumberparty/room?id=${parseInt(code)}&user=${encodeURIComponent(name)}`);
+                setButtonsLoading(false);
+                // Fetch room state and show appropriate view
+                const stateRes = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+                const state = await stateRes.json();
+                if (state.error) {
+                    showJoinError(state.error);
+                    return;
+                }
+                isCreator = state.is_creator;
+                if (state.state === 'lobby') {
+                    showLobbyView();
+                    document.getElementById('start-game-btn').addEventListener('click', startGame);
+                    startPolling();
+                } else {
+                    switchToGameView();
+                }
             } catch (e) {
                 showJoinError('Network error. Please try again.');
                 setButtonsLoading(false);
