@@ -125,7 +125,7 @@
                     <div class="sp-game-btn-icon">&#127183;</div>
                     <div>Draw Card</div>
                 </button>
-                <button id="fake-team-btn" onclick="showFakeTeam()" class="sp-game-btn hidden sm:col-span-1">
+                <button id="fake-team-btn" onclick="showFakeTeam()" class="sp-game-btn sm:col-span-1" style="display:none;">
                     <div class="sp-game-btn-icon">&#127917;</div>
                     <div>Show Fake Team</div>
                 </button>
@@ -166,7 +166,17 @@
         let autoCloseTimeout = null;
         let timerInterval = null;
         let isCreator = false;
-        let playerInfo = null;
+        let gameData = null; // stored locally when game starts
+
+        const CARD_PROMPTS = [
+            "Select a player. They must show their team to one of the players directly next to them.",
+            "Select a player. They must show their team to one of the players directly next to them.",
+            "Select a player. They must show their team card to you.",
+            "Select a player. They must show their team card to you.",
+            "Reveal the discarded cards from the last round.",
+            "Pick the next host.",
+            "Pick two players. They must show each other their team cards.",
+        ];
 
         // --- Init ---
         document.addEventListener('DOMContentLoaded', () => {
@@ -229,7 +239,7 @@
                         document.getElementById('start-game-btn').addEventListener('click', startGame);
                         startPolling();
                     } else {
-                        switchToGameView();
+                        switchToGameView(data);
                     }
                     return; // success
                 } catch (e) {
@@ -264,20 +274,15 @@
             }
         }
 
-        async function switchToGameView() {
+        function switchToGameView(data) {
+            gameData = data;
             document.getElementById('join-view').classList.add('hidden');
             document.getElementById('lobby-view').classList.add('hidden');
             document.getElementById('game-view').classList.remove('hidden');
             stopPolling();
 
-            try {
-                const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-                playerInfo = await res.json();
-                if (playerInfo.is_gay_king) {
-                    document.getElementById('fake-team-btn').classList.remove('hidden');
-                }
-            } catch (e) {
-                console.error('Failed to fetch player info', e);
+            if (gameData.is_gay_king) {
+                document.getElementById('fake-team-btn').style.display = '';
             }
         }
 
@@ -351,7 +356,7 @@
                     document.getElementById('start-game-btn').addEventListener('click', startGame);
                     startPolling();
                 } else {
-                    switchToGameView();
+                    switchToGameView(data);
                 }
             } catch (e) {
                 showJoinError('Network error. Please try again.');
@@ -392,6 +397,7 @@
             });
             const data = await res.json();
             if (data.error) return showStartError(data.error);
+            switchToGameView(data);
         }
 
         // --- Polling ---
@@ -425,7 +431,7 @@
                             `Suggested: 4-5 people`;
                     }
                 } else if (data.state === 'playing') {
-                    switchToGameView();
+                    switchToGameView(data);
                 }
             } catch (e) {
                 console.error('Poll failed', e);
@@ -443,50 +449,41 @@
             `).join('');
         }
 
-        // --- Game Actions ---
-        async function showTeam() {
-            const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-            const data = await res.json();
-            if (data.error) return;
-            const team = data.team === 'straight' ? 'Straight' : 'Gay';
-            const color = data.team === 'straight' ? '#1a1a1a' : '#7B2D3B';
+        // --- Game Actions (all use local gameData, no API calls) ---
+        function showTeam() {
+            const team = gameData.team === 'straight' ? 'Straight' : 'Gay';
+            const color = gameData.team === 'straight' ? '#1a1a1a' : '#7B2D3B';
             showCardModal('Your Team',
                 `<div style="background:${color}; color:white; padding:12px 32px; border-radius:12px; font-size:1.5rem; font-weight:700;">${team}</div>`,
                 10000);
         }
 
-        async function showPosition() {
-            const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-            const data = await res.json();
-            if (data.error) return;
-            const pos = data.position === 'king' ? 'King' : 'Normal';
-            const icon = data.position === 'king' ? '&#9813; ' : '';
+        function showPosition() {
+            const pos = gameData.position === 'king' ? 'King' : 'Normal';
+            const icon = gameData.position === 'king' ? '&#9813; ' : '';
             showCardModal('Your Position',
                 `<div style="font-size:1.5rem; font-weight:700;">${icon}${pos}</div>`,
                 10000);
         }
 
-        async function showKnowledge() {
-            const res = await fetch(`/slumberparty/api/my-knowledge?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-            const data = await res.json();
-            if (data.error) return;
+        function showKnowledge() {
             let content;
-            if (data.knowledge === 'no_information') {
+            if (gameData.knowledge.length === 0) {
                 content = '<div style="font-size:1.2rem; opacity:0.6;">No Information</div>';
             } else {
                 content = '<div style="text-align:left; width:100%;"><div style="font-size:0.85rem; margin-bottom:8px; opacity:0.7;">Gay Team Members:</div>' +
-                    data.members.map(m => `<div style="padding:6px 0; border-bottom:1px solid #E8DCC4; font-weight:600;">${escapeHtml(m)}</div>`).join('') +
+                    gameData.knowledge.map(m => `<div style="padding:6px 0; border-bottom:1px solid #E8DCC4; font-weight:600;">${escapeHtml(m)}</div>`).join('') +
                     '</div>';
             }
             showCardModal('Your Knowledge', content, 10000);
         }
 
-        async function hostParty() {
-            const res = await fetch(`/slumberparty/api/host-party?room_id=${roomId}&player_name=${encodeURIComponent(userName)}&_=${Date.now()}`);
-            const data = await res.json();
-            if (data.error) return;
+        function hostParty() {
+            const others = gameData.players.filter(n => n.toLowerCase() !== userName.toLowerCase());
+            const shuffled = others.slice().sort(() => Math.random() - 0.5);
+            const party = [userName, ...shuffled.slice(0, gameData.party_size - 1)];
             const content = '<div style="text-align:left; width:100%;">' +
-                data.party.map((name, i) =>
+                party.map((name, i) =>
                     `<div style="padding:8px 0; border-bottom:1px solid #E8DCC4; ${i === 0 ? 'font-weight:700;' : ''}">
                         ${i === 0 ? '&#127881; ' : ''}${escapeHtml(name)}${i === 0 ? ' <span style="font-size:0.75rem; opacity:0.7;">(Host)</span>' : ''}
                     </div>`
@@ -495,18 +492,14 @@
             showCardModal('Slumber Party', content, 0);
         }
 
-        async function drawCard() {
-            const res = await fetch('/slumberparty/api/draw-card');
-            const data = await res.json();
-            showCardModal('Action Card', `<div style="font-size:1.1rem; line-height:1.6;">${escapeHtml(data.prompt)}</div>`, 0);
+        function drawCard() {
+            const prompt = CARD_PROMPTS[Math.floor(Math.random() * CARD_PROMPTS.length)];
+            showCardModal('Action Card', `<div style="font-size:1.1rem; line-height:1.6;">${escapeHtml(prompt)}</div>`, 0);
         }
 
-        async function showFakeTeam() {
-            const res = await fetch(`/slumberparty/api/fake-team?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-            const data = await res.json();
-            if (data.error) return;
+        function showFakeTeam() {
             showCardModal('Your Team',
-                `<div style="background:#1a1a1a; color:white; padding:12px 32px; border-radius:12px; font-size:1.5rem; font-weight:700;">${data.fake_team}</div>`,
+                `<div style="background:#1a1a1a; color:white; padding:12px 32px; border-radius:12px; font-size:1.5rem; font-weight:700;">Straight</div>`,
                 10000);
         }
 

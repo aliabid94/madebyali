@@ -26,18 +26,6 @@ class Room:
 
 rooms: dict[int, Room] = {}
 
-# --- Card Prompts ---
-
-CARD_PROMPTS = [
-    "Select a player. They must show their team to one of the players directly next to them.",
-    "Select a player. They must show their team to one of the players directly next to them.",
-    "Select a player. They must show their team card to you.",
-    "Select a player. They must show their team card to you.",
-    "Reveal the discarded cards from the last round.",
-    "Pick the next host.",
-    "Pick two players. They must show each other their team cards.",
-]
-
 # --- Request Models ---
 
 class CreateRoomRequest(BaseModel):
@@ -113,21 +101,21 @@ async def join_room(req: JoinRoomRequest):
         room.players[key] = player
 
     # Return room state along with join response
+    player = room.players[key]
+    if room.state == "playing":
+        return _game_state_for_player(room, player)
+
     player_names = [p.name for p in room.players.values()]
     count = len(player_names)
-    response = {
+    return {
         "ok": True,
-        "state": room.state,
+        "state": "lobby",
         "players": player_names,
         "is_creator": key == room.creator_name,
         "player_count": count,
+        "suggested_gay": max(1, round(count / 3)),
+        "suggested_party_size": min(count, 4) if count <= 5 else 5,
     }
-    if room.state == "lobby":
-        response["suggested_gay"] = max(1, round(count / 3))
-        response["suggested_party_size"] = min(count, 4) if count <= 5 else 5
-    else:
-        response["party_size"] = room.party_size
-    return response
 
 @router.get("/slumberparty/api/room-state")
 async def room_state(room_id: int, player_name: str):
@@ -152,11 +140,7 @@ async def room_state(room_id: int, player_name: str):
             "suggested_party_size": suggested_party,
         }
     else:
-        return {
-            "state": "playing",
-            "players": player_names,
-            "party_size": room.party_size,
-        }
+        return _game_state_for_player(room, player)
 
 @router.post("/slumberparty/api/start-game")
 async def start_game(req: StartGameRequest):
@@ -194,65 +178,27 @@ async def start_game(req: StartGameRequest):
     room.players[random.choice(list(gay_keys))].position = "king"
 
     room.state = "playing"
-    return {"success": True}
+    creator_player = get_player(room, req.player_name)
+    return _game_state_for_player(room, creator_player)
 
-@router.get("/slumberparty/api/my-info")
-async def my_info(room_id: int, player_name: str):
-    room = rooms.get(room_id)
-    if not room or room.state != "playing":
-        return {"error": "Game not active"}
-    player = get_player(room, player_name)
-    if not player:
-        return {"error": "Player not found"}
-    return {
-        "team": player.team,
-        "position": player.position,
-        "is_gay_king": player.team == "gay" and player.position == "king",
-    }
 
-@router.get("/slumberparty/api/my-knowledge")
-async def my_knowledge(room_id: int, player_name: str):
-    room = rooms.get(room_id)
-    if not room or room.state != "playing":
-        return {"error": "Game not active"}
-    player = get_player(room, player_name)
-    if not player:
-        return {"error": "Player not found"}
-
+def _game_state_for_player(room: Room, player: Player) -> dict:
+    """Return all game info a player needs. Called once when the game starts."""
     gay_names = [p.name for p in room.players.values() if p.team == "gay"]
+    all_names = [p.name for p in room.players.values()]
+    is_gay_king = player.team == "gay" and player.position == "king"
 
     if player.team == "straight" and player.position == "normal":
-        return {"knowledge": "no_information", "members": []}
+        knowledge = []
     else:
-        return {"knowledge": "gay_members", "members": gay_names}
+        knowledge = gay_names
 
-@router.get("/slumberparty/api/host-party")
-async def host_party(room_id: int, player_name: str):
-    room = rooms.get(room_id)
-    if not room or room.state != "playing":
-        return {"error": "Game not active"}
-    player = get_player(room, player_name)
-    if not player:
-        return {"error": "Player not found"}
-
-    party_size = room.party_size
-    others = [p.name for p in room.players.values() if p.name.lower() != player_name.lower()]
-    random.shuffle(others)
-    party = [player.name] + others[:party_size - 1]
-    return {"party": party}
-
-@router.get("/slumberparty/api/draw-card")
-async def draw_card():
-    return {"prompt": random.choice(CARD_PROMPTS)}
-
-@router.get("/slumberparty/api/fake-team")
-async def fake_team(room_id: int, player_name: str):
-    room = rooms.get(room_id)
-    if not room or room.state != "playing":
-        return {"error": "Game not active"}
-    player = get_player(room, player_name)
-    if not player:
-        return {"error": "Player not found"}
-    if not (player.team == "gay" and player.position == "king"):
-        return {"error": "Only the Gay King can use this"}
-    return {"fake_team": "Straight"}
+    return {
+        "state": "playing",
+        "team": player.team,
+        "position": player.position,
+        "is_gay_king": is_gay_king,
+        "knowledge": knowledge,
+        "players": all_names,
+        "party_size": room.party_size,
+    }
