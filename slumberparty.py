@@ -1,5 +1,4 @@
 import random
-import time
 from fastapi import APIRouter
 from fastapi.responses import FileResponse
 from pydantic import BaseModel
@@ -13,7 +12,6 @@ class Player:
         self.name = name
         self.team = None       # "straight" or "gay"
         self.position = None   # "king" or "normal"
-        self.last_poll = time.time()
 
 class Room:
     def __init__(self, room_id: int, creator_name: str):
@@ -23,8 +21,6 @@ class Room:
         self.state = "lobby"   # "lobby" or "playing"
         self.num_gay = 0
         self.party_size = 4
-        self.created_at = time.time()
-        self.last_activity = time.time()
 
 # --- In-Memory Storage ---
 
@@ -59,14 +55,7 @@ class StartGameRequest(BaseModel):
 
 # --- Helpers ---
 
-def cleanup_old_rooms():
-    now = time.time()
-    stale = [rid for rid, room in rooms.items() if now - room.last_activity > 7200]
-    for rid in stale:
-        del rooms[rid]
-
 def generate_room_id() -> int:
-    cleanup_old_rooms()
     existing = set(rooms.keys())
     for _ in range(100):
         rid = random.randint(1, 1000)
@@ -116,13 +105,11 @@ async def join_room(req: JoinRoomRequest):
     existing = room.players.get(key)
     if existing:
         # Same name = same player, treat as rejoin
-        existing.last_poll = time.time()
         return {"ok": True}
     if room.state != "lobby":
         return {"error": "Game already started"}
     player = Player(name)
     room.players[key] = player
-    room.last_activity = time.time()
     return {"ok": True}
 
 @router.get("/slumberparty/api/room-state")
@@ -133,9 +120,6 @@ async def room_state(room_id: int, player_name: str):
     player = get_player(room, player_name)
     if not player:
         return {"error": "Player not found in room"}
-    player.last_poll = time.time()
-    room.last_activity = time.time()
-
     player_names = [p.name for p in room.players.values()]
     count = len(player_names)
     suggested_gay = max(1, round(count / 3))
@@ -193,7 +177,6 @@ async def start_game(req: StartGameRequest):
     room.players[random.choice(list(gay_keys))].position = "king"
 
     room.state = "playing"
-    room.last_activity = time.time()
     return {"success": True}
 
 @router.get("/slumberparty/api/my-info")
