@@ -158,3 +158,174 @@ nav {
 .modal-pop-in {
     animation: modalPopIn 0.3s ease-out;
 }
+
+/* --- Slumber Party --- */
+
+.slumberparty {
+    background-color: #F5ECD7;
+    font-family: "Quicksand", sans-serif;
+    color: #4A1A24;
+    background-image: radial-gradient(circle, #E8DCC4 1px, transparent 1px);
+    background-size: 24px 24px;
+}
+
+.sp-input {
+    @apply px-4 py-3 rounded-lg border-2 outline-none;
+    border-color: #C9A84C;
+    background-color: #FDF6E3;
+    color: #4A1A24;
+    font-family: "Quicksand", sans-serif;
+}
+
+.sp-input:focus {
+    border-color: #7B2D3B;
+    box-shadow: 0 0 0 3px rgba(123, 45, 59, 0.15);
+}
+
+.sp-btn-primary {
+    @apply px-6 py-3 rounded-lg font-bold transition-all;
+    background-color: #7B2D3B;
+    color: #FDF6E3;
+    font-family: "Quicksand", sans-serif;
+}
+
+.sp-btn-primary:hover {
+    background-color: #5E2230;
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(123, 45, 59, 0.3);
+}
+
+.sp-btn-primary:active {
+    transform: translateY(0);
+}
+
+.sp-btn-secondary {
+    @apply px-6 py-3 rounded-lg font-bold transition-all;
+    background-color: #C9A84C;
+    color: #4A1A24;
+    font-family: "Quicksand", sans-serif;
+}
+
+.sp-btn-secondary:hover {
+    background-color: #B8973E;
+    transform: translateY(-1px);
+}
+
+.sp-player-item {
+    @apply px-4 py-2.5 rounded-lg flex items-center gap-3;
+    background-color: #FDF6E3;
+    border: 1px solid #E8DCC4;
+}
+
+.sp-player-dot {
+    @apply w-2.5 h-2.5 rounded-full;
+    background-color: #4A7B5E;
+}
+
+.sp-host-badge {
+    @apply text-xs font-bold px-2 py-0.5 rounded-full;
+    background-color: #7B2D3B;
+    color: white;
+}
+
+.sp-game-btn {
+    @apply rounded-xl p-5 text-center font-bold transition-all flex flex-col items-center justify-center gap-2;
+    background-color: #7B2D3B;
+    color: #FDF6E3;
+    min-height: 100px;
+}
+
+.sp-game-btn:hover {
+    transform: scale(1.03);
+    box-shadow: 0 6px 20px rgba(123, 45, 59, 0.35);
+}
+
+.sp-game-btn:active {
+    transform: scale(0.97);
+}
+
+.sp-game-btn-icon {
+    font-size: 1.75rem;
+}
+
+/* Playing Card Modal */
+.card-container {
+    perspective: 1200px;
+    @apply w-[85vw] max-w-xs;
+}
+
+.playing-card {
+    @apply relative w-full;
+    transform-style: preserve-3d;
+    transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    aspect-ratio: 5 / 7;
+}
+
+.playing-card.flipped {
+    transform: rotateY(180deg);
+}
+
+.card-front,
+.card-back {
+    @apply absolute inset-0 rounded-2xl flex flex-col;
+    backface-visibility: hidden;
+    border: 3px solid #7B2D3B;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+}
+
+.card-front {
+    @apply items-center justify-center overflow-hidden;
+    background-color: #7B2D3B;
+}
+
+.card-front-pattern {
+    @apply absolute inset-3 rounded-xl;
+    border: 2px solid #C9A84C;
+    background-image:
+        repeating-linear-gradient(45deg, transparent, transparent 8px, rgba(201, 168, 76, 0.1) 8px, rgba(201, 168, 76, 0.1) 16px),
+        repeating-linear-gradient(-45deg, transparent, transparent 8px, rgba(201, 168, 76, 0.1) 8px, rgba(201, 168, 76, 0.1) 16px);
+}
+
+.card-front-label {
+    @apply text-5xl font-bold relative z-10;
+    color: #C9A84C;
+    font-family: "Quicksand", sans-serif;
+}
+
+.card-back {
+    @apply p-5;
+    background-color: #FDF6E3;
+    color: #4A1A24;
+    transform: rotateY(180deg);
+}
+
+.card-header {
+    @apply text-center text-base font-bold uppercase tracking-widest pb-3 mb-3;
+    border-bottom: 2px solid #C9A84C;
+    color: #7B2D3B;
+}
+
+.card-body {
+    @apply flex-1 flex items-center justify-center text-center overflow-y-auto;
+    font-family: "Quicksand", sans-serif;
+}
+
+.card-footer {
+    @apply pt-3 space-y-1;
+}
+
+.progress-bar-track {
+    @apply w-full h-2 rounded-full overflow-hidden;
+    background-color: #E8DCC4;
+}
+
+.progress-bar-fill {
+    @apply h-full rounded-full;
+    background-color: #C9A84C;
+    width: 100%;
+}
+
+.timer-text {
+    @apply text-xs text-center block;
+    color: #7B2D3B;
+}

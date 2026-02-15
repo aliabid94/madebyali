@@ -1,0 +1,534 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-WM5YFXBNP2"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'G-WM5YFXBNP2');
+    </script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Slumber Party - madebyali</title>
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link href="/static/styles.css" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body class="slumberparty w-full relative min-h-screen flex flex-col">
+    <nav class="mx-auto container px-4 flex pt-4 justify-between items-center w-full">
+        <a href="/"><img src="/static/logo.png" class="h-5 sm:h-6 dark:invert"></a>
+        <h1 class="text-xl font-bold tracking-wide" style="color: #7B2D3B;">slumber party</h1>
+        <div class="w-10"></div>
+    </nav>
+
+    <main class="mx-auto container px-4 flex-1 flex flex-col items-center pt-6">
+
+        <!-- JOIN/CREATE VIEW -->
+        <div id="join-view" class="w-full max-w-sm space-y-5 hidden">
+            <div>
+                <label class="block text-sm font-semibold mb-1" style="color:#4A1A24;">Your Name</label>
+                <input type="text" id="player-name" placeholder="Enter your name" maxlength="20"
+                    class="sp-input w-full">
+            </div>
+
+            <div>
+                <label class="block text-sm font-semibold mb-1" style="color:#4A1A24;">Room Number</label>
+                <input type="number" id="room-code" placeholder="Enter room number" min="1" max="1000"
+                    class="sp-input w-full">
+            </div>
+            <button id="join-room-btn" class="sp-btn-primary w-full">Join Room</button>
+
+            <div class="flex items-center gap-3">
+                <div class="flex-1 h-px" style="background:#C9A84C;"></div>
+                <span class="text-sm font-semibold" style="color:#7B2D3B;">or</span>
+                <div class="flex-1 h-px" style="background:#C9A84C;"></div>
+            </div>
+
+            <button id="create-room-btn" class="sp-btn-secondary w-full">Create New Room</button>
+
+            <p id="join-error" class="text-center text-sm font-semibold hidden" style="color:#c0392b;"></p>
+        </div>
+
+        <!-- LOBBY VIEW -->
+        <div id="lobby-view" class="w-full max-w-sm space-y-5 hidden">
+            <div class="text-center">
+                <div class="text-sm font-semibold" style="color:#4A1A24;">Room Code</div>
+                <div id="room-code-display" class="text-5xl font-bold tracking-widest" style="color:#7B2D3B;"></div>
+                <div class="text-xs mt-1" style="color:#9B7B5E;">Share this code with friends to join</div>
+            </div>
+
+            <div>
+                <div class="text-sm font-semibold mb-2" style="color:#4A1A24;">
+                    Players (<span id="player-count">0</span>)
+                </div>
+                <div id="player-list" class="space-y-2 max-h-48 overflow-y-auto"></div>
+            </div>
+
+            <!-- Creator-only controls -->
+            <div id="creator-controls" class="space-y-4 hidden">
+                <div>
+                    <label class="block text-sm font-semibold mb-1" style="color:#4A1A24;">
+                        Gay Team Size
+                    </label>
+                    <div class="flex items-center gap-3">
+                        <input type="number" id="num-gay" min="1" class="sp-input flex-1">
+                        <span id="gay-suggestion" class="text-xs whitespace-nowrap" style="color:#9B7B5E;"></span>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-semibold mb-1" style="color:#4A1A24;">
+                        Slumber Party Size
+                    </label>
+                    <div class="flex items-center gap-3">
+                        <input type="number" id="party-size" min="2" class="sp-input flex-1">
+                        <span id="party-suggestion" class="text-xs whitespace-nowrap" style="color:#9B7B5E;"></span>
+                    </div>
+                </div>
+                <button id="start-game-btn" class="sp-btn-primary w-full">Start Game</button>
+                <p id="start-error" class="text-center text-sm font-semibold hidden" style="color:#c0392b;"></p>
+            </div>
+
+            <div id="waiting-msg" class="text-center text-sm hidden" style="color:#9B7B5E;">
+                Waiting for the host to start the game...
+            </div>
+        </div>
+
+        <!-- GAME VIEW -->
+        <div id="game-view" class="w-full max-w-md hidden">
+            <div class="text-center mb-6">
+                <div class="font-bold"><span style="color:#7B2D3B;">Red is Gay</span>, Black is Straight</div>
+                <div class="text-sm" style="color:#9B7B5E;">Tap a card to reveal information</div>
+            </div>
+            <div class="grid grid-cols-2 gap-3 sm:gap-4">
+                <button onclick="showTeam()" class="sp-game-btn">
+                    <div class="sp-game-btn-icon">&#9824;</div>
+                    <div>Show Team</div>
+                </button>
+                <button onclick="showPosition()" class="sp-game-btn">
+                    <div class="sp-game-btn-icon">&#9813;</div>
+                    <div>Show Position</div>
+                </button>
+                <button onclick="showKnowledge()" class="sp-game-btn">
+                    <div class="sp-game-btn-icon">&#128065;</div>
+                    <div>Show Knowledge</div>
+                </button>
+                <button onclick="hostParty()" class="sp-game-btn">
+                    <div class="sp-game-btn-icon">&#127881;</div>
+                    <div>Host Slumber Party</div>
+                </button>
+                <button onclick="drawCard()" class="sp-game-btn col-span-2 sm:col-span-1">
+                    <div class="sp-game-btn-icon">&#127183;</div>
+                    <div>Draw Card</div>
+                </button>
+                <button id="fake-team-btn" onclick="showFakeTeam()" class="sp-game-btn hidden sm:col-span-1">
+                    <div class="sp-game-btn-icon">&#127917;</div>
+                    <div>Show Fake Team</div>
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- PLAYING CARD MODAL -->
+    <div id="card-modal" class="fixed inset-0 bg-black/60 items-center justify-center z-50 hidden" onclick="closeCardIfClickedOutside(event)">
+        <div class="card-container" id="card-container">
+            <div class="playing-card" id="playing-card">
+                <div class="card-front">
+                    <div class="card-front-pattern"></div>
+                    <div class="card-front-label">SP</div>
+                </div>
+                <div class="card-back">
+                    <div class="card-header" id="card-header"></div>
+                    <div class="card-body" id="card-body"></div>
+                    <div class="card-footer" id="card-footer">
+                        <div class="progress-bar-track">
+                            <div class="progress-bar-fill" id="progress-bar"></div>
+                        </div>
+                        <span class="timer-text" id="timer-text"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // --- State from URL ---
+        const params = new URLSearchParams(window.location.search);
+        const roomId = params.get('id');
+        const userName = params.get('user');
+        const isRoomPage = window.location.pathname === '/slumberparty/room';
+
+        let pollInterval = null;
+        let autoCloseTimeout = null;
+        let timerInterval = null;
+        let isCreator = false;
+        let playerInfo = null;
+
+        // --- Init ---
+        document.addEventListener('DOMContentLoaded', () => {
+            if (isRoomPage && roomId && userName) {
+                // We're on the room page — join (idempotent) then show lobby/game
+                joinAndEnterRoom();
+            } else {
+                // We're on the landing page
+                showJoinView();
+                document.getElementById('create-room-btn').addEventListener('click', createRoom);
+                document.getElementById('join-room-btn').addEventListener('click', joinRoom);
+                document.getElementById('player-name').addEventListener('keydown', e => {
+                    if (e.key === 'Enter') document.getElementById('create-room-btn').click();
+                });
+                document.getElementById('room-code').addEventListener('keydown', e => {
+                    if (e.key === 'Enter') document.getElementById('join-room-btn').click();
+                });
+            }
+
+            document.addEventListener('keydown', e => {
+                if (e.key === 'Escape') hideCardModal();
+            });
+        });
+
+        // --- Room page: join then show appropriate view ---
+        async function joinAndEnterRoom() {
+            try {
+                const res = await fetch('/slumberparty/api/join-room', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({room_id: parseInt(roomId), player_name: userName}),
+                });
+                const data = await res.json();
+                if (data.error) {
+                    // Room doesn't exist or game started and we're not in it — go back
+                    window.location.href = '/slumberparty';
+                    return;
+                }
+                // Successfully joined/rejoined — check room state
+                const stateRes = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+                const state = await stateRes.json();
+                if (state.error) {
+                    window.location.href = '/slumberparty';
+                    return;
+                }
+                isCreator = state.is_creator;
+                if (state.state === 'lobby') {
+                    showLobbyView();
+                    document.getElementById('start-game-btn').addEventListener('click', startGame);
+                    startPolling();
+                } else {
+                    switchToGameView();
+                }
+            } catch (e) {
+                console.error('Failed to join room', e);
+                window.location.href = '/slumberparty';
+            }
+        }
+
+        // --- View Management ---
+        function showJoinView() {
+            document.getElementById('join-view').classList.remove('hidden');
+            document.getElementById('lobby-view').classList.add('hidden');
+            document.getElementById('game-view').classList.add('hidden');
+        }
+
+        function showLobbyView() {
+            document.getElementById('join-view').classList.add('hidden');
+            document.getElementById('lobby-view').classList.remove('hidden');
+            document.getElementById('game-view').classList.add('hidden');
+            document.getElementById('room-code-display').textContent = roomId;
+            if (isCreator) {
+                document.getElementById('creator-controls').classList.remove('hidden');
+                document.getElementById('waiting-msg').classList.add('hidden');
+            } else {
+                document.getElementById('creator-controls').classList.add('hidden');
+                document.getElementById('waiting-msg').classList.remove('hidden');
+            }
+        }
+
+        async function switchToGameView() {
+            document.getElementById('join-view').classList.add('hidden');
+            document.getElementById('lobby-view').classList.add('hidden');
+            document.getElementById('game-view').classList.remove('hidden');
+            stopPolling();
+
+            try {
+                const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+                playerInfo = await res.json();
+                if (playerInfo.is_gay_king) {
+                    document.getElementById('fake-team-btn').classList.remove('hidden');
+                }
+            } catch (e) {
+                console.error('Failed to fetch player info', e);
+            }
+        }
+
+        // --- Landing page actions ---
+        async function createRoom() {
+            const name = document.getElementById('player-name').value.trim();
+            if (!name) return showJoinError('Please enter your name');
+            hideJoinError();
+
+            const res = await fetch('/slumberparty/api/create-room', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({player_name: name}),
+            });
+            const data = await res.json();
+            if (data.error) return showJoinError(data.error);
+
+            window.location.href = `/slumberparty/room?id=${data.room_id}&user=${encodeURIComponent(name)}`;
+        }
+
+        async function joinRoom() {
+            const name = document.getElementById('player-name').value.trim();
+            const code = document.getElementById('room-code').value.trim();
+            if (!name) return showJoinError('Please enter your name');
+            if (!code || parseInt(code) < 1 || parseInt(code) > 1000) return showJoinError('Enter a valid room number (1-1000)');
+            hideJoinError();
+
+            const res = await fetch('/slumberparty/api/join-room', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({room_id: parseInt(code), player_name: name}),
+            });
+            const data = await res.json();
+            if (data.error) return showJoinError(data.error);
+
+            window.location.href = `/slumberparty/room?id=${parseInt(code)}&user=${encodeURIComponent(name)}`;
+        }
+
+        async function startGame() {
+            const numGay = parseInt(document.getElementById('num-gay').value);
+            const pSize = parseInt(document.getElementById('party-size').value);
+            if (!numGay || numGay < 1) return showStartError('Enter number of Gay players');
+            if (!pSize || pSize < 2) return showStartError('Party size must be at least 2');
+
+            const res = await fetch('/slumberparty/api/start-game', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({
+                    room_id: parseInt(roomId),
+                    player_name: userName,
+                    num_gay: numGay,
+                    party_size: pSize,
+                }),
+            });
+            const data = await res.json();
+            if (data.error) return showStartError(data.error);
+        }
+
+        // --- Polling ---
+        function startPolling() {
+            poll();
+            pollInterval = setInterval(poll, 2000);
+        }
+
+        function stopPolling() {
+            if (pollInterval) {
+                clearInterval(pollInterval);
+                pollInterval = null;
+            }
+        }
+
+        async function poll() {
+            try {
+                const res = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+                const data = await res.json();
+                if (data.error) return;
+
+                if (data.state === 'lobby') {
+                    updatePlayerList(data.players);
+                    document.getElementById('player-count').textContent = data.player_count;
+                    if (isCreator) {
+                        const nc = document.getElementById('num-gay');
+                        const ps = document.getElementById('party-size');
+                        document.getElementById('gay-suggestion').textContent =
+                            `Suggested: ~${data.suggested_gay} (1/3 of players)`;
+                        document.getElementById('party-suggestion').textContent =
+                            `Suggested: 4-5 people`;
+                    }
+                } else if (data.state === 'playing') {
+                    switchToGameView();
+                }
+            } catch (e) {
+                console.error('Poll failed', e);
+            }
+        }
+
+        function updatePlayerList(players) {
+            const list = document.getElementById('player-list');
+            list.innerHTML = players.map((name, i) => `
+                <div class="sp-player-item">
+                    <span class="sp-player-dot"></span>
+                    <span class="flex-1">${escapeHtml(name)}</span>
+                    ${i === 0 ? '<span class="sp-host-badge">HOST</span>' : ''}
+                </div>
+            `).join('');
+        }
+
+        // --- Game Actions ---
+        async function showTeam() {
+            const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+            const data = await res.json();
+            if (data.error) return;
+            const team = data.team === 'straight' ? 'Straight' : 'Gay';
+            const color = data.team === 'straight' ? '#1a1a1a' : '#7B2D3B';
+            showCardModal('Your Team',
+                `<div style="background:${color}; color:white; padding:12px 32px; border-radius:12px; font-size:1.5rem; font-weight:700;">${team}</div>`,
+                10000);
+        }
+
+        async function showPosition() {
+            const res = await fetch(`/slumberparty/api/my-info?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+            const data = await res.json();
+            if (data.error) return;
+            const pos = data.position === 'king' ? 'King' : 'Normal';
+            const icon = data.position === 'king' ? '&#9813; ' : '';
+            showCardModal('Your Position',
+                `<div style="font-size:1.5rem; font-weight:700;">${icon}${pos}</div>`,
+                10000);
+        }
+
+        async function showKnowledge() {
+            const res = await fetch(`/slumberparty/api/my-knowledge?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+            const data = await res.json();
+            if (data.error) return;
+            let content;
+            if (data.knowledge === 'no_information') {
+                content = '<div style="font-size:1.2rem; opacity:0.6;">No Information</div>';
+            } else {
+                content = '<div style="text-align:left; width:100%;"><div style="font-size:0.85rem; margin-bottom:8px; opacity:0.7;">Gay Team Members:</div>' +
+                    data.members.map(m => `<div style="padding:6px 0; border-bottom:1px solid #E8DCC4; font-weight:600;">${escapeHtml(m)}</div>`).join('') +
+                    '</div>';
+            }
+            showCardModal('Your Knowledge', content, 10000);
+        }
+
+        async function hostParty() {
+            const res = await fetch(`/slumberparty/api/host-party?room_id=${roomId}&player_name=${encodeURIComponent(userName)}&_=${Date.now()}`);
+            const data = await res.json();
+            if (data.error) return;
+            const content = '<div style="text-align:left; width:100%;">' +
+                data.party.map((name, i) =>
+                    `<div style="padding:8px 0; border-bottom:1px solid #E8DCC4; ${i === 0 ? 'font-weight:700;' : ''}">
+                        ${i === 0 ? '&#127881; ' : ''}${escapeHtml(name)}${i === 0 ? ' <span style="font-size:0.75rem; opacity:0.7;">(Host)</span>' : ''}
+                    </div>`
+                ).join('') +
+                '</div>';
+            showCardModal('Slumber Party', content, 0);
+        }
+
+        async function drawCard() {
+            const res = await fetch('/slumberparty/api/draw-card');
+            const data = await res.json();
+            showCardModal('Action Card', `<div style="font-size:1.1rem; line-height:1.6;">${escapeHtml(data.prompt)}</div>`, 0);
+        }
+
+        async function showFakeTeam() {
+            const res = await fetch(`/slumberparty/api/fake-team?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+            const data = await res.json();
+            if (data.error) return;
+            showCardModal('Your Team',
+                `<div style="background:#1a1a1a; color:white; padding:12px 32px; border-radius:12px; font-size:1.5rem; font-weight:700;">${data.fake_team}</div>`,
+                10000);
+        }
+
+        // --- Card Modal ---
+        function showCardModal(title, content, duration) {
+            const modal = document.getElementById('card-modal');
+            const card = document.getElementById('playing-card');
+            const header = document.getElementById('card-header');
+            const body = document.getElementById('card-body');
+            const footer = document.getElementById('card-footer');
+            const progressBar = document.getElementById('progress-bar');
+            const timerText = document.getElementById('timer-text');
+
+            clearAutoClose();
+
+            header.textContent = title;
+            body.innerHTML = content;
+
+            if (duration > 0) {
+                footer.classList.remove('hidden');
+                progressBar.style.transition = 'none';
+                progressBar.style.width = '100%';
+                progressBar.offsetHeight;
+                progressBar.style.transition = `width ${duration}ms linear`;
+                progressBar.style.width = '0%';
+
+                let remaining = Math.ceil(duration / 1000);
+                timerText.textContent = `Closes in ${remaining}s`;
+                timerInterval = setInterval(() => {
+                    remaining--;
+                    if (remaining > 0) {
+                        timerText.textContent = `Closes in ${remaining}s`;
+                    } else {
+                        timerText.textContent = 'Closing...';
+                    }
+                }, 1000);
+
+                autoCloseTimeout = setTimeout(() => {
+                    hideCardModal();
+                }, duration);
+            } else {
+                footer.classList.add('hidden');
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            card.classList.remove('flipped');
+            requestAnimationFrame(() => {
+                requestAnimationFrame(() => {
+                    card.classList.add('flipped');
+                });
+            });
+        }
+
+        function hideCardModal() {
+            clearAutoClose();
+            const modal = document.getElementById('card-modal');
+            const card = document.getElementById('playing-card');
+            card.classList.remove('flipped');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                modal.classList.remove('flex');
+            }, 350);
+        }
+
+        function clearAutoClose() {
+            if (autoCloseTimeout) { clearTimeout(autoCloseTimeout); autoCloseTimeout = null; }
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+        }
+
+        function closeCardIfClickedOutside(e) {
+            if (e.target === document.getElementById('card-modal')) {
+                hideCardModal();
+            }
+        }
+
+        // --- Helpers ---
+        function showJoinError(msg) {
+            const el = document.getElementById('join-error');
+            el.textContent = msg;
+            el.classList.remove('hidden');
+        }
+        function hideJoinError() {
+            document.getElementById('join-error').classList.add('hidden');
+        }
+        function showStartError(msg) {
+            const el = document.getElementById('start-error');
+            el.textContent = msg;
+            el.classList.remove('hidden');
+            setTimeout(() => el.classList.add('hidden'), 4000);
+        }
+
+        function escapeHtml(str) {
+            const div = document.createElement('div');
+            div.textContent = str;
+            return div.innerHTML;
+        }
+    </script>
+</body>
+</html>

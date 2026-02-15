@@ -1,7 +1,7 @@
 const fs = require('fs');
 
 // Reset HTML files to use non-hashed CSS for development
-const htmlFiles = ['./pages/index.html', './pages/fishwish.html'];
+const htmlFiles = ['./pages/index.html', './pages/fishwish.html', './pages/slumberparty.html'];
 
 htmlFiles.forEach(filePath => {
   if (fs.existsSync(filePath)) {

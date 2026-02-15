@@ -8,7 +8,7 @@ if (fs.existsSync(hashFilePath)) {
   const hashedFilename = fs.readFileSync(hashFilePath, 'utf8').trim();
 
   // Find all HTML files in pages directory
-  const htmlFiles = ['./pages/index.html', './pages/fishwish.html'];
+  const htmlFiles = ['./pages/index.html', './pages/fishwish.html', './pages/slumberparty.html'];
 
   htmlFiles.forEach(filePath => {
     if (fs.existsSync(filePath)) {
