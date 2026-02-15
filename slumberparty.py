@@ -65,14 +65,6 @@ def cleanup_old_rooms():
     for rid in stale:
         del rooms[rid]
 
-def cleanup_stale_players(room: Room):
-    if room.state != "lobby":
-        return
-    now = time.time()
-    stale = [key for key, p in room.players.items() if now - p.last_poll > 60]
-    for key in stale:
-        del room.players[key]
-
 def generate_room_id() -> int:
     cleanup_old_rooms()
     existing = set(rooms.keys())
@@ -143,7 +135,6 @@ async def room_state(room_id: int, player_name: str):
         return {"error": "Player not found in room"}
     player.last_poll = time.time()
     room.last_activity = time.time()
-    cleanup_stale_players(room)
 
     player_names = [p.name for p in room.players.values()]
     count = len(player_names)

@@ -41,7 +41,7 @@
                 <input type="number" id="room-code" placeholder="Enter room number" min="1" max="1000"
                     class="sp-input w-full">
             </div>
-            <button id="join-room-btn" class="sp-btn-primary w-full">Join Room</button>
+            <button id="join-room-btn" type="button" class="sp-btn-primary w-full">Join Room</button>
 
             <div class="flex items-center gap-3">
                 <div class="flex-1 h-px" style="background:#C9A84C;"></div>
@@ -49,7 +49,7 @@
                 <div class="flex-1 h-px" style="background:#C9A84C;"></div>
             </div>
 
-            <button id="create-room-btn" class="sp-btn-secondary w-full">Create New Room</button>
+            <button id="create-room-btn" type="button" class="sp-btn-secondary w-full">Create New Room</button>
 
             <p id="join-error" class="text-center text-sm font-semibold hidden" style="color:#c0392b;"></p>
         </div>
@@ -179,10 +179,10 @@
                 document.getElementById('create-room-btn').addEventListener('click', createRoom);
                 document.getElementById('join-room-btn').addEventListener('click', joinRoom);
                 document.getElementById('player-name').addEventListener('keydown', e => {
-                    if (e.key === 'Enter') document.getElementById('create-room-btn').click();
+                    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('create-room-btn').click(); }
                 });
                 document.getElementById('room-code').addEventListener('keydown', e => {
-                    if (e.key === 'Enter') document.getElementById('join-room-btn').click();
+                    if (e.key === 'Enter') { e.preventDefault(); document.getElementById('join-room-btn').click(); }
                 });
             }
 
