@@ -105,12 +105,29 @@ async def join_room(req: JoinRoomRequest):
     existing = room.players.get(key)
     if existing:
         # Same name = same player, treat as rejoin
-        return {"ok": True}
-    if room.state != "lobby":
+        pass
+    elif room.state != "lobby":
         return {"error": "Game already started"}
-    player = Player(name)
-    room.players[key] = player
-    return {"ok": True}
+    else:
+        player = Player(name)
+        room.players[key] = player
+
+    # Return room state along with join response
+    player_names = [p.name for p in room.players.values()]
+    count = len(player_names)
+    response = {
+        "ok": True,
+        "state": room.state,
+        "players": player_names,
+        "is_creator": key == room.creator_name,
+        "player_count": count,
+    }
+    if room.state == "lobby":
+        response["suggested_gay"] = max(1, round(count / 3))
+        response["suggested_party_size"] = min(count, 4) if count <= 5 else 5
+    else:
+        response["party_size"] = room.party_size
+    return response
 
 @router.get("/slumberparty/api/room-state")
 async def room_state(room_id: int, player_name: str):
