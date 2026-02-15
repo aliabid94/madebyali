@@ -191,6 +191,22 @@
             });
         });
 
+        // --- Fallback: show join view with error instead of redirecting ---
+        // Mobile browsers block redirects not initiated by user gestures,
+        // so we show the join UI in-place instead of navigating.
+        function fallbackToJoinView(errorMsg) {
+            showJoinView();
+            document.getElementById('create-room-btn').addEventListener('click', createRoom);
+            document.getElementById('join-room-btn').addEventListener('click', joinRoom);
+            document.getElementById('player-name').addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); document.getElementById('create-room-btn').click(); }
+            });
+            document.getElementById('room-code').addEventListener('keydown', e => {
+                if (e.key === 'Enter') { e.preventDefault(); document.getElementById('join-room-btn').click(); }
+            });
+            if (errorMsg) showJoinError(errorMsg);
+        }
+
         // --- Room page: join then show appropriate view ---
         async function joinAndEnterRoom(retries = 3) {
             for (let attempt = 0; attempt < retries; attempt++) {
@@ -202,15 +218,15 @@
                     });
                     const data = await res.json();
                     if (data.error) {
-                        // Real error (room not found, etc.) — go back
-                        window.location.href = '/slumberparty';
+                        // Real error (room not found, etc.) — show join view
+                        fallbackToJoinView(data.error);
                         return;
                     }
                     // Successfully joined/rejoined — check room state
                     const stateRes = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
                     const state = await stateRes.json();
                     if (state.error) {
-                        window.location.href = '/slumberparty';
+                        fallbackToJoinView(state.error);
                         return;
                     }
                     isCreator = state.is_creator;
@@ -230,7 +246,7 @@
                 }
             }
             // All retries exhausted
-            window.location.href = '/slumberparty';
+            fallbackToJoinView('Could not connect to room. Please try again.');
         }
 
         // --- View Management ---
