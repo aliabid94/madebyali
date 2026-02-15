@@ -192,38 +192,45 @@
         });
 
         // --- Room page: join then show appropriate view ---
-        async function joinAndEnterRoom() {
-            try {
-                const res = await fetch('/slumberparty/api/join-room', {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({room_id: parseInt(roomId), player_name: userName}),
-                });
-                const data = await res.json();
-                if (data.error) {
-                    // Room doesn't exist or game started and we're not in it — go back
-                    window.location.href = '/slumberparty';
-                    return;
+        async function joinAndEnterRoom(retries = 3) {
+            for (let attempt = 0; attempt < retries; attempt++) {
+                try {
+                    const res = await fetch('/slumberparty/api/join-room', {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({room_id: parseInt(roomId), player_name: userName}),
+                    });
+                    const data = await res.json();
+                    if (data.error) {
+                        // Real error (room not found, etc.) — go back
+                        window.location.href = '/slumberparty';
+                        return;
+                    }
+                    // Successfully joined/rejoined — check room state
+                    const stateRes = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
+                    const state = await stateRes.json();
+                    if (state.error) {
+                        window.location.href = '/slumberparty';
+                        return;
+                    }
+                    isCreator = state.is_creator;
+                    if (state.state === 'lobby') {
+                        showLobbyView();
+                        document.getElementById('start-game-btn').addEventListener('click', startGame);
+                        startPolling();
+                    } else {
+                        switchToGameView();
+                    }
+                    return; // success
+                } catch (e) {
+                    console.error(`Join attempt ${attempt + 1} failed`, e);
+                    if (attempt < retries - 1) {
+                        await new Promise(r => setTimeout(r, 1000));
+                    }
                 }
-                // Successfully joined/rejoined — check room state
-                const stateRes = await fetch(`/slumberparty/api/room-state?room_id=${roomId}&player_name=${encodeURIComponent(userName)}`);
-                const state = await stateRes.json();
-                if (state.error) {
-                    window.location.href = '/slumberparty';
-                    return;
-                }
-                isCreator = state.is_creator;
-                if (state.state === 'lobby') {
-                    showLobbyView();
-                    document.getElementById('start-game-btn').addEventListener('click', startGame);
-                    startPolling();
-                } else {
-                    switchToGameView();
-                }
-            } catch (e) {
-                console.error('Failed to join room', e);
-                window.location.href = '/slumberparty';
             }
+            // All retries exhausted
+            window.location.href = '/slumberparty';
         }
 
         // --- View Management ---
@@ -265,38 +272,75 @@
         }
 
         // --- Landing page actions ---
+        let actionInProgress = false;
+
         async function createRoom() {
+            if (actionInProgress) return;
             const name = document.getElementById('player-name').value.trim();
             if (!name) return showJoinError('Please enter your name');
             hideJoinError();
+            setButtonsLoading(true);
 
-            const res = await fetch('/slumberparty/api/create-room', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({player_name: name}),
-            });
-            const data = await res.json();
-            if (data.error) return showJoinError(data.error);
-
-            window.location.href = `/slumberparty/room?id=${data.room_id}&user=${encodeURIComponent(name)}`;
+            try {
+                const res = await fetch('/slumberparty/api/create-room', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({player_name: name}),
+                });
+                const data = await res.json();
+                if (data.error) {
+                    showJoinError(data.error);
+                    setButtonsLoading(false);
+                    return;
+                }
+                window.location.href = `/slumberparty/room?id=${data.room_id}&user=${encodeURIComponent(name)}`;
+            } catch (e) {
+                showJoinError('Network error. Please try again.');
+                setButtonsLoading(false);
+            }
         }
 
         async function joinRoom() {
+            if (actionInProgress) return;
             const name = document.getElementById('player-name').value.trim();
             const code = document.getElementById('room-code').value.trim();
             if (!name) return showJoinError('Please enter your name');
             if (!code || parseInt(code) < 1 || parseInt(code) > 1000) return showJoinError('Enter a valid room number (1-1000)');
             hideJoinError();
+            setButtonsLoading(true);
 
-            const res = await fetch('/slumberparty/api/join-room', {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({room_id: parseInt(code), player_name: name}),
-            });
-            const data = await res.json();
-            if (data.error) return showJoinError(data.error);
+            try {
+                const res = await fetch('/slumberparty/api/join-room', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({room_id: parseInt(code), player_name: name}),
+                });
+                const data = await res.json();
+                if (data.error) {
+                    showJoinError(data.error);
+                    setButtonsLoading(false);
+                    return;
+                }
+                window.location.href = `/slumberparty/room?id=${parseInt(code)}&user=${encodeURIComponent(name)}`;
+            } catch (e) {
+                showJoinError('Network error. Please try again.');
+                setButtonsLoading(false);
+            }
+        }
 
-            window.location.href = `/slumberparty/room?id=${parseInt(code)}&user=${encodeURIComponent(name)}`;
+        function setButtonsLoading(loading) {
+            actionInProgress = loading;
+            const createBtn = document.getElementById('create-room-btn');
+            const joinBtn = document.getElementById('join-room-btn');
+            createBtn.disabled = loading;
+            joinBtn.disabled = loading;
+            if (loading) {
+                createBtn.style.opacity = '0.5';
+                joinBtn.style.opacity = '0.5';
+            } else {
+                createBtn.style.opacity = '';
+                joinBtn.style.opacity = '';
+            }
         }
 
         async function startGame() {
